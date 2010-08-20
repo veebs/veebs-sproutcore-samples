@@ -1,0 +1,11 @@
+
+This project contains sample apps that I've written as I'm learning Sproutcore and testing out concepts.
+
+login-sample
+============
+This demonstrates:
+  - moving from one page to another
+  - binding between view and controller
+  - using 'view-model' data stored in the controller
+  - async HTTP call to retrieve login details
+  - error handling
