@@ -9,3 +9,20 @@ This demonstrates:
   - using 'view-model' data stored in the controller
   - async HTTP call to retrieve login details
   - error handling
+
+This does NOT handle cookies, session id or logout.
+
+route-sample
+============
+I found the standard Sproutcore route sample too complex for a newbie like me.
+It uses responders, states and other advance features.
+
+This sample demonstrates:
+  - registering routes (in main.js) using SC.routes.add().
+  - moving between 2 pages (one_page and two_page) using routes using SC.routes.set().
+  - how to read and use URL parameters in the route handler (route.js)
+  
+
+
+
+
