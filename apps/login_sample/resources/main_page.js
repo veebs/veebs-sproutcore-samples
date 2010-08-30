@@ -18,7 +18,7 @@ LoginSample.mainPage = SC.Page.design({
     childViews: 'labelView'.w(),
     
     labelView: SC.LabelView.design({
-      layout: { centerX: 0, centerY: 0, width: 200, height: 18 },
+      layout: { centerX: 0, centerY: 0, width: 300, height: 18 },
       textAlign: SC.ALIGN_CENTER,
       tagName: "h1", 
       value: "Welcome to SproutCore! You are now logged in."

@@ -8,12 +8,12 @@
 
   This controller takes care of all the work required to login.
 
-  @extends SC.Object
-*/
+ @extends SC.Object
+ */
 LoginSample.loginController = SC.ObjectController.create(
-/** @scope LoginSample.loginController.prototype */ {
+  /** @scope LoginSample.loginController.prototype */ {
 
-  
+
   // View-Model
   // I have used page level properties for the control to bind to  because I generally see the "model" as data
   // in a datastore.
@@ -26,11 +26,11 @@ LoginSample.loginController = SC.ObjectController.create(
   onLoginGoToPagePaneName: 'mainPage.mainPane',
 
   /**
-    Start async login process
- 
-    @returns YES if async call successfully started, NO if it failed. If error, the error message
-             will be placed in the 'errorMessage' property.
-  */
+   Start async login process
+
+   @returns YES if async call successfully started, NO if it failed. If error, the error message
+   will be placed in the 'errorMessage' property.
+   */
   beginLogin: function() {
     try {
       // Get our data from the properties using the SC 'get' methods
@@ -52,45 +52,45 @@ LoginSample.loginController = SC.ObjectController.create(
       // If the credentials not admin/admin, then get a bad url so we get 404 error
       var url = '/login_sample/en/current/source/resources/main_page.js';
       if (username != 'admin' || password != 'admin') {
-        url =  '/login_sample/en/current/source/resources/bad_url.js';
+        url = '/login_sample/en/current/source/resources/bad_url.js';
       }
-      
+
       SC.Request.getUrl(url)
-                .notify(this, 'endLogin')
-                .send();
-                
+        .notify(this, 'endLogin')
+        .send();
+
       return YES;
-    } 
+    }
     catch (err) {
       // Set Error
       this.set('errorMessage', err.message);
 
       // Finish login processing
       this.set('isLoggingIn', NO);
-      
+
       return NO;
     }
   },
 
   /**
-    Callback from beginLogin() after we get a response from the server to process
-    the returned login info.
-    
-    @param {SC.Response} response The HTTP response
-    @param {function} callback A function taking SC.Error as an input parameter. null is passed if no error.
-  */
+   Callback from beginLogin() after we get a response from the server to process
+   the returned login info.
+
+   @param {SC.Response} response The HTTP response
+   @param {function} callback A function taking SC.Error as an input parameter. null is passed if no error.
+   */
   endLogin: function(response) {
     try {
-      // Finish login processing
+      // Flag finish login processing to unlock screen 
       this.set('isLoggingIn', NO);
-      
+
       // Check status
       SC.Logger.info('HTTP status code: ' + response.status);
       if (!SC.ok(response)) {
         // Error 
         throw SC.Error.desc('Invalid username or password. Try admin/admin ;-)');
       }
-            
+
       // clear data
       this.set('errorMessage', '');
 
@@ -103,12 +103,12 @@ LoginSample.loginController = SC.ObjectController.create(
         pane = LoginSample.getPath(pagePaneName);
         pane.append();
       }
-    } 
+    }
     catch (err) {
       this.set('errorMessage', err.message);
     }
   }
-    
+
 });
 
 

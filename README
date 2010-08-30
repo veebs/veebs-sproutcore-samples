@@ -10,7 +10,11 @@ This demonstrates:
   - async HTTP call to retrieve login details
   - error handling
 
-This does NOT handle cookies, session id or logout.
+This does NOT handle cookies, session id or logout.  This is will addressed in an the login-logout-sample (todo).
+
+Check out the walkthrough at http://www.veebsbraindump.com/2010/08/sproutcore-login-sample/
+
+
 
 route-sample
 ============
@@ -22,7 +26,7 @@ This sample demonstrates:
   - moving between 2 pages (one_page and two_page) using routes using SC.routes.set().
   - how to read and use URL parameters in the route handler (route.js)
   
-
+Check out the walkthrough at http://www.veebsbraindump.com/2010/08/sproutcore-page-navigation-using-routes/
 
 
 
