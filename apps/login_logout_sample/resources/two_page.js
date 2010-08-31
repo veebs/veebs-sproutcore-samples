@@ -8,7 +8,7 @@
 LoginLogoutSample.twoPage = SC.Page.design({
 
   twoPane: SC.MainPane.design({
-    childViews: 'buttonView'.w(),
+    childViews: 'buttonView logoutButtonView'.w(),
     
     buttonView: SC.ButtonView.design({
       layout: { top: 27, left: 27, width: 400 },
@@ -16,10 +16,20 @@ LoginLogoutSample.twoPage = SC.Page.design({
       action: 'go'
     }),
     
+    logoutButtonView: SC.ButtonView.design({
+      layout: { top: 60, left: 27, width: 400 },
+      title: 'Logout',
+      action: 'goLogout'
+    }),
+
     go: function() {
       SC.routes.set('location', 'onePage/onePane');
-    }
+    },
     
+    goLogout: function() {
+      SC.routes.set('location', 'logoutPage/logoutPane');
+    }
+
   })
 
 });

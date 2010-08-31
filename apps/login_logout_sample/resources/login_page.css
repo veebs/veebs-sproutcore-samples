@@ -1,0 +1,18 @@
+.login-pane {
+  background-color: #254981;
+}
+
+.sc-pane.login-pane > .sc-view {
+  background-color: #254981;
+}
+
+.sc-pane.login-pane .sc-label-view {
+  font-size: 14px;
+  font-family: Helvetica, Arial, sans-serif;
+  color: rgb(169, 195, 228);
+}
+
+.sc-pane.login-pane .error-message {
+  font-size: 12px;
+  color: #ff0000;
+}

@@ -1,6 +1,20 @@
 
 This project contains sample apps that I've written as I'm learning Sproutcore and testing out concepts.
 
+
+route-sample
+============
+I found the standard Sproutcore route sample too complex for a newbie like me.
+It uses responders, states and other advance features.
+
+This sample demonstrates:
+  - registering routes (in main.js) using SC.routes.add().
+  - moving between 2 pages (one_page and two_page) using routes using SC.routes.set().
+  - how to read and use URL parameters in the route handler (route.js)
+
+Check out the walkthrough at http://www.veebsbraindump.com/2010/08/sproutcore-page-navigation-using-routes/
+
+
 login-sample
 ============
 This demonstrates:
@@ -15,18 +29,14 @@ This does NOT handle cookies, session id or logout.  This is will addressed in a
 Check out the walkthrough at http://www.veebsbraindump.com/2010/08/sproutcore-login-sample/
 
 
-
-route-sample
+login-logout-sample
 ============
-I found the standard Sproutcore route sample too complex for a newbie like me.
-It uses responders, states and other advance features.
+This demonstrates:
+  - using cookies to store authentication token upon login
+  - storage of login permanently, for browser session or for 1 minute
+  - logout clearing authentication token
 
-This sample demonstrates:
-  - registering routes (in main.js) using SC.routes.add().
-  - moving between 2 pages (one_page and two_page) using routes using SC.routes.set().
-  - how to read and use URL parameters in the route handler (route.js)
-  
-Check out the walkthrough at http://www.veebsbraindump.com/2010/08/sproutcore-page-navigation-using-routes/
+Check out the walkthrough at http://www.veebsbraindump.com/2010/08/sproutcore-login-logout-sample/
 
 
 

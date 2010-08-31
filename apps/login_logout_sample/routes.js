@@ -38,6 +38,31 @@ LoginLogoutSample.routes = SC.Object.create({
       paneName = 'onePane';
     }
 
+    // If authentication cookie not found or expired, then go to login page
+    if (pageName != 'loginPage' && paneName != 'loginPane') {
+      var authCookie = SC.Cookie.find('LoginLogoutSampleCookie');
+      if (authCookie == null) {
+        LoginLogoutSample.loginPageController.set('username', '');
+        LoginLogoutSample.loginPageController.set('password', '');
+        LoginLogoutSample.loginPageController.set('returnRoute', pageName + '/' + paneName);
+        SC.routes.set('location', 'loginPage/loginPane');
+        return;
+      }
+    }
+
+    // If this is the special logout out, then log out
+    if (pageName == 'logoutPage' && paneName == 'logoutPane') {
+      var authCookie = SC.Cookie.find('LoginLogoutSampleCookie');
+      if (authCookie != null) {
+        authCookie.destroy();
+      }
+      LoginLogoutSample.loginPageController.set('username', '');
+      LoginLogoutSample.loginPageController.set('password', '');
+      LoginLogoutSample.loginPageController.set('returnRoute', 'onePage/onePane');
+      SC.routes.set('location', 'loginPage/loginPane');
+      return;
+    }
+
     // If there is a current pane, remove it from the screen
     if (this.currentPagePane != null) {
       this.currentPagePane.remove();
