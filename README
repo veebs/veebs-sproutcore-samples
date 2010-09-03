@@ -30,10 +30,10 @@ Check out the walkthrough at http://www.veebsbraindump.com/2010/08/sproutcore-lo
 
 
 login-logout-sample
-============
+===================
 This demonstrates:
   - using cookies to store authentication token upon login
-  - storage of login permanently, for browser session or for 1 minute
+  - storage of login permanently, for browser session or for 3 seconds
   - logout clearing authentication token
 
 Check out the walkthrough at http://www.veebsbraindump.com/2010/08/sproutcore-login-logout-sample/
