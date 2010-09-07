@@ -1,6 +1,10 @@
 
 This project contains sample apps that I've written as I'm learning Sproutcore and testing out concepts.
 
+As of 7/9/2010, the code has been built to work with abbot and the master branch of Sproutcore.
+For configuration instructions, see http://wiki.sproutcore.com/Abbot-Setting+Up under the section
+"Getting the Latest Code".
+
 
 route-sample
 ============

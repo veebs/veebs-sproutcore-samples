@@ -34,7 +34,6 @@ LoginLogoutSample.loginPage = SC.Page.design({
         field: SC.TextFieldView.design({
           layout: { width: 200, height: 22, right: 3, centerY: 0 },
 
-          nextKeyView: 'password',
           isEnabledBinding: SC.Binding.from("LoginLogoutSample.loginPageController.isLoggingIn")
             .bool()
             .transform(function(value, isForward) {
@@ -47,7 +46,7 @@ LoginLogoutSample.loginPage = SC.Page.design({
       password: SC.View.design({
         layout: { left: 17, right: 14, top: 45, height: 26 },
         childViews: 'label field'.w(),
-
+        
         label: SC.LabelView.design({
           layout: { left: 0, width: 107, height: 18, centerY: 0 },
 
@@ -60,7 +59,6 @@ LoginLogoutSample.loginPage = SC.Page.design({
           layout: { width: 200, height: 22, right: 3, centerY: 0 },
 
           isPassword: YES,
-          nextKeyView: 'rememberMe',
           isEnabledBinding: SC.Binding.from("LoginLogoutSample.loginPageController.isLoggingIn")
             .bool()
             .transform(function(value, isForward) {
@@ -93,7 +91,10 @@ LoginLogoutSample.loginPage = SC.Page.design({
           nameKey: 'name',
           valueKey: 'value',
 
-          nextKeyView: 'loginButton',
+          acceptsFirstResponder: function() {
+            return this.get('isEnabled');
+          }.property('isEnabled'),
+
           isEnabledBinding: SC.Binding.from("LoginLogoutSample.loginPageController.isLoggingIn")
             .bool()
             .transform(function(value, isForward) {
