@@ -40,7 +40,7 @@ This demonstrates:
   - storage of login permanently, for browser session or for 3 seconds
   - logout clearing authentication token
 
-Check out the walkthrough at http://www.veebsbraindump.com/2010/08/sproutcore-login-logout-sample/
+Check out the walkthrough at http://www.veebsbraindump.com/2010/09/sproutcore-login-logout-sample/
 
 
 
