@@ -1,9 +1,29 @@
 
 This project contains sample apps that I've written as I'm learning Sproutcore and testing out concepts.
 
-As of 7/9/2010, the code has been built to work with abbot and the master branch of Sproutcore.
-For configuration instructions, see http://wiki.sproutcore.com/Abbot-Setting+Up under the section
-"Getting the Latest Code".
+As of 14/9/2010, the code has been built to work with the master branch of Sproutcore.
+
+Installation Instructions
+=========================
+1. Install sproutcore gem.
+
+   sudo gem install sproutcore
+
+
+2. Get this project source code
+
+   git clone git://github.com/veebs/veebs-sproutcore-samples.git
+   cd veebs-sproutcore-samples
+
+
+3. Install latest sproutcore source code into our project. Sproutcore build tools is smart
+   enough to use this copy rather than the copy in the installed gem from step #1.
+
+   cd veebs-sproutcore-samples
+   mkdir -p frameworks
+   cd frameworks
+   git clone git://github.com/sproutit/sproutcore.git
+
 
 
 route-sample

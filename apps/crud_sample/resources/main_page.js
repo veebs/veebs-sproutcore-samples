@@ -4,6 +4,11 @@
 // ==========================================================================
 /*globals CrudSample */
 
+CrudSample.TableRowView = SC.TableRowView.extend({
+
+});
+
+
 // This page describes the main user interface for your application.  
 CrudSample.mainPage = SC.Page.design({
 
@@ -70,7 +75,7 @@ CrudSample.mainPage = SC.Page.design({
         contentBinding:   'CrudSample.userArrayController.arrangedObjects',
         selectionBinding: 'CrudSample.userArrayController.selection',
         selectOnMouseDown: YES,
-        exampleView: SC.TableRowView,
+        exampleView: CrudSample.TableRowView,
         recordType: CrudSample.UserModel
       })
     }),
@@ -91,3 +96,4 @@ CrudSample.mainPage = SC.Page.design({
   })  // mainPane
 
 }); // mainPage
+
