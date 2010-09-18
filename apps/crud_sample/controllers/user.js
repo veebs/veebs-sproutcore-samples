@@ -16,7 +16,7 @@ CrudSample.userController = SC.ObjectController.create({
    * Binds the user record proxied by this controller to the selected
    * user record in the user array controller.
    */
-  contentBinding: SC.Binding.single('CrudSample.userArrayController.selection'),
+  contentBinding: 'CrudSample.userArrayController.selection',
 
   /**
    * Commits the current record to the server

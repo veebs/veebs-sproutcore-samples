@@ -60,7 +60,9 @@ CrudSample.mainPage = SC.Page.design({
           SC.TableColumn.create({
             key:   'isAdmin',
             label: 'Is Admin?',
-            formatter: function(v) { return v ? 'Yes' : 'No'; },
+            formatter: function(v) {
+              return v ? 'Yes' : 'No';
+            },
             width: 100
           }),
           SC.TableColumn.create({
@@ -74,9 +76,10 @@ CrudSample.mainPage = SC.Page.design({
         ],
         contentBinding:   'CrudSample.userArrayController.arrangedObjects',
         selectionBinding: 'CrudSample.userArrayController.selection',
-        selectOnMouseDown: YES,
         exampleView: CrudSample.TableRowView,
-        recordType: CrudSample.UserModel
+        recordType: CrudSample.UserModel,
+        target: "CrudSample.mainPage.detailPane",
+        action: "showDetail"
       })
     }),
 
@@ -93,7 +96,63 @@ CrudSample.mainPage = SC.Page.design({
       })
     })
 
-  })  // mainPane
+  }),  // mainPane
+
+  detailPane: SC.PanelPane.create({
+    layout: { width:400, height:300, centerX:0, centerY:-50},
+
+    contentView: SC.View.extend({
+      childViews: 'username dismissButton'.w(),
+
+      username: SC.View.design({
+        layout: { left: 17, right: 14, top: 17, height: 26 },
+        childViews: 'label field'.w(),
+
+        label: SC.LabelView.design({
+          layout: { left: 0, width: 77, height: 18, centerY: 0 },
+
+          value: 'Username',
+          localize: YES,
+          textAlign: SC.ALIGN_RIGHT
+        }),
+
+        field: SC.TextFieldView.design({
+          layout: { width: 230, height: 22, right: 3, centerY: 0 },
+          valueBinding: 'CrudSample.userController.username'
+        })
+      }),
+
+      dismissButton: SC.ButtonView.design({
+        layout: {bottom: 10, centerX:0, height:24, width:80},
+        title: "Dismiss",
+        action: "hideDetail"
+      })
+    }),
+
+    // Methods to show/hide the details pane
+    // Thanks Charles:
+    // http://markmail.org/message/miobpqe7y34w7rht#query:sproutcore%20panelpane+page:1+mid:miobpqe7y34w7rht+state:results
+    detailIsVisible: NO,
+
+    showDetail: function() {
+      this.set('detailIsVisible', YES);
+    },
+
+    hideDetail: function() {
+      this.set('detailIsVisible', NO);
+    },
+
+    /* observer - show/hide panel */
+    detailIsVisibleDidChange: function() {
+      var panel = CrudSample.mainPage.get('detailPane');
+      if (this.get('detailIsVisible')) {
+        panel.append();
+      }
+      else {
+        panel.remove();
+      }
+    }.observes('detailIsVisible')
+  })  //detailPane
 
 }); // mainPage
 
