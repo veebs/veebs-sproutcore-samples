@@ -49,6 +49,15 @@ CrudSample.UserModel = SC.Record.extend({
 
   isAdmin: SC.Record.attr(Boolean, { defaultValue: NO,  isRequired: YES }),
 
-  lastLoggedInDate: SC.Record.attr(Date, {userIsoDate: YES})
+  /**
+   * Convert our boolean value into string because SelectFieldView converts 'false' to 'false'
+   * rather than '(False)' as returned by SC.guidFor() (into which the bound value is passed).
+   * This means, that No cannot be selected because '(False)' != 'False'.
+   */
+  isAdminString: function() {
+    return this.get('isAdmin') ? 'YES' : 'NO';
+  }.property('isAdmin').cacheable(),
+
+  lastLoggedInDate: SC.Record.attr(SC.DateTime, {userIsoDate: YES})
 
 });

@@ -8,7 +8,6 @@ CrudSample.TableRowView = SC.TableRowView.extend({
 
 });
 
-
 // This page describes the main user interface for your application.  
 CrudSample.mainPage = SC.Page.design({
 
@@ -69,7 +68,7 @@ CrudSample.mainPage = SC.Page.design({
             key:   'lastLoggedInDate',
             label: 'Last Logged In Date',
             formatter: function(v) {
-              return v == null ? '' : SC.DateTime.create(v.getTime()).toFormattedString('%Y-%m-%d %H:%M:%S %Z');
+              return v == null ? '' : v.toFormattedString('%Y-%m-%d %H:%M:%S %Z');
             },
             width: 300
           })
@@ -79,7 +78,7 @@ CrudSample.mainPage = SC.Page.design({
         exampleView: CrudSample.TableRowView,
         recordType: CrudSample.UserModel,
         target: "CrudSample.mainPage.detailPane",
-        action: "showDetail"
+        action: "showForUpdate"
       })
     }),
 
@@ -99,33 +98,140 @@ CrudSample.mainPage = SC.Page.design({
   }),  // mainPane
 
   detailPane: SC.PanelPane.create({
-    layout: { width:400, height:300, centerX:0, centerY:-50},
+    layout: { width:400, height:250, centerX:0, centerY:-50},
 
     contentView: SC.View.extend({
-      childViews: 'username dismissButton'.w(),
+      childViews: 'title username department userStatus isAdmin lastLoggedInDate saveButton cancelButton'.w(),
+
+      title: SC.LabelView.design({
+        layout: { left: 17, right: 17, top: 17, height: 26 },
+        value: 'User Details',
+        textAlign: SC.ALIGN_CENTER,
+        fontWeight: SC.BOLD_WEIGHT
+      }),
 
       username: SC.View.design({
-        layout: { left: 17, right: 14, top: 17, height: 26 },
+        layout: { left: 17, right: 17, top: 44, height: 26 },
         childViews: 'label field'.w(),
 
         label: SC.LabelView.design({
-          layout: { left: 0, width: 77, height: 18, centerY: 0 },
+          layout: { left: 0, width: 95, height: 18, centerY: 0 },
 
           value: 'Username',
-          localize: YES,
           textAlign: SC.ALIGN_RIGHT
         }),
 
         field: SC.TextFieldView.design({
-          layout: { width: 230, height: 22, right: 3, centerY: 0 },
-          valueBinding: 'CrudSample.userController.username'
+          layout: { width: 250, height: 22, right: 3, centerY: 0 },
+          valueBinding: 'CrudSample.userNestedController.username'
         })
       }),
 
-      dismissButton: SC.ButtonView.design({
-        layout: {bottom: 10, centerX:0, height:24, width:80},
-        title: "Dismiss",
-        action: "hideDetail"
+      department: SC.View.design({
+        layout: { left: 17, right: 17, top: 71, height: 26 },
+        childViews: 'label field'.w(),
+
+        label: SC.LabelView.design({
+          layout: { left: 0, width: 95, height: 18, centerY: 0 },
+
+          value: 'Department',
+          textAlign: SC.ALIGN_RIGHT
+        }),
+
+        field: SC.TextFieldView.design({
+          layout: { width: 250, height: 22, right: 3, centerY: 0 },
+          valueBinding: 'CrudSample.userNestedController.department'
+        })
+      }),
+
+      userStatus: SC.View.design({
+        layout: { left: 17, right: 17, top: 98, height: 26 },
+        childViews: 'label field'.w(),
+
+        label: SC.LabelView.design({
+          layout: { left: 0, width: 95, height: 18, centerY: 0 },
+
+          value: 'User Status',
+          textAlign: SC.ALIGN_RIGHT
+        }),
+
+        field: SC.SelectFieldView.design({
+          layout: { width: 250, height: 22, right: 3, centerY: 0 },
+
+          objects: [
+            {name:'Active', value: 'Active'},
+            {name:'InActive', value: 'InActive'},
+            {name:'Locked', value: 'Locked;'},
+          ],
+          nameKey: 'name',
+          valueKey: 'value',
+
+          acceptsFirstResponder: function() {
+            return this.get('isEnabled');
+          }.property('isEnabled'),
+
+          valueBinding: 'CrudSample.userNestedController.userStatus'
+        })
+
+      }),
+
+      isAdmin: SC.View.design({
+        layout: { left: 17, right: 17, top: 125, height: 26 },
+        childViews: 'label field'.w(),
+
+        label: SC.LabelView.design({
+          layout: { left: 0, width: 95, height: 18, centerY: 0 },
+
+          value: 'Is Admin',
+          textAlign: SC.ALIGN_RIGHT
+        }),
+
+        field: SC.SelectFieldView.design({
+          layout: { width: 250, height: 22, right: 3, centerY: 0 },
+
+          objects: [
+            {name:'Yes', value: 'YES'},
+            {name:'No', value: 'NO'},
+          ],
+          nameKey: 'name',
+          valueKey: 'value',
+
+          acceptsFirstResponder: function() {
+            return this.get('isEnabled');
+          }.property('isEnabled'),
+
+          valueBinding: 'CrudSample.userNestedController.isAdminString'
+        })
+      }),
+
+      lastLoggedInDate: SC.View.design({
+        layout: { left: 17, right: 17, top: 152, height: 26 },
+        childViews: 'label field'.w(),
+
+        label: SC.LabelView.design({
+          layout: { left: 0, width: 95, height: 18, centerY: 0 },
+
+          value: 'Last Logged In Date',
+          textAlign: SC.ALIGN_RIGHT
+        }),
+
+        field: SC.TextFieldView.design({
+          layout: { width: 250, height: 22, right: 3, centerY: 0 },
+          valueBinding: 'CrudSample.userNestedController.lastLoggedInDate'
+        })
+      }),
+
+      saveButton: SC.ButtonView.design({
+        layout: {bottom: 10, right: 110, height:24, width:80},
+        title: 'Save',
+        action: 'save',
+        isEnabledBinding: 'CrudSample.userNestedController.recordIsChanged'
+      }),
+
+      cancelButton: SC.ButtonView.design({
+        layout: {bottom: 10, right: 20, height:24, width:80},
+        title: 'Cancel',
+        action: 'cancel'
       })
     }),
 
@@ -134,11 +240,18 @@ CrudSample.mainPage = SC.Page.design({
     // http://markmail.org/message/miobpqe7y34w7rht#query:sproutcore%20panelpane+page:1+mid:miobpqe7y34w7rht+state:results
     detailIsVisible: NO,
 
-    showDetail: function() {
+    showForUpdate: function() {
       this.set('detailIsVisible', YES);
+      CrudSample.userNestedController.loadCurrent();
     },
 
-    hideDetail: function() {
+    save: function() {
+      CrudSample.userNestedController.save();
+      this.set('detailIsVisible', NO);
+    },
+
+    cancel: function() {
+      CrudSample.userNestedController.discard();
       this.set('detailIsVisible', NO);
     },
 

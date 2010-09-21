@@ -22,7 +22,7 @@ Installation Instructions
    cd veebs-sproutcore-samples
    mkdir -p frameworks
    cd frameworks
-   git clone git://github.com/sproutit/sproutcore.git
+   git clone git://github.com/sproutcore/sproutcore.git
 
 
 

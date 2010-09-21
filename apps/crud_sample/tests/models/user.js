@@ -20,8 +20,9 @@ test('Create User', function() {
   equals(user.get('department'), 'Accounts', 'department is Accounts');
   equals(user.get('userStatus'), 'Active', 'user status is Active');
   equals(user.get('isAdmin'), NO, 'user is Admin');
-  var d1 = user.get('lastLoggedInDate').getTime();
-  var d2 = Date.UTC(2010,4,5,10,20,30);
+  var d1 = user.get('lastLoggedInDate').toISO8601();
+  var d2 = '2010-05-05T10:20:30+00:00';
+  debugger;
   equals(d1, d2, 'user last logged in');
 
   // Status should be ready new because record is new and not committed to server
@@ -60,8 +61,8 @@ test('Read and Update User', function() {
   equals(user.get('department'), 'Accounts', 'department is Accounts');
   equals(user.get('userStatus'), 'Active', 'user status is Active');
   equals(user.get('isAdmin'), YES, 'user is Admin');
-  var d1 = user.get('lastLoggedInDate').getTime();
-  var d2 = Date.UTC(2010,0,1,10,20,30);
+  var d1 = user.get('lastLoggedInDate').toISO8601();
+  var d2 = '2010-01-01T10:20:30+00:00';
   equals(d1, d2, 'user last logged in');
 
   // Record status should be clean because we've just retrieved it
