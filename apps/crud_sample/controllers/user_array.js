@@ -38,7 +38,7 @@ CrudSample.userArrayController = SC.ArrayController.create(SC.CollectionViewDele
    */
   add: function() {
     // Create a new task in the store
-    var newUser = CrudSample.store.createRecord(CrudSample.UserModel);
+    var newUser = CrudSample.store.createRecord(CrudSample.UserRecord);
 
     // Make the new user the currently selected record in our store so we can edit it
     this.selectObject(newUser);

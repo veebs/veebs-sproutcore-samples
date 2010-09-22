@@ -28,7 +28,9 @@ CrudSample.mainPage = SC.Page.design({
 
       addButton: SC.ButtonView.design({
         layout: { centerY: 0, height: 24, right: 12, width: 100 },
-        title:  'Add User'
+        title:  'Add User',
+        target: "CrudSample.mainPage.detailPane",
+        action: "showForCreate"
       })
     }),
 
@@ -76,7 +78,7 @@ CrudSample.mainPage = SC.Page.design({
         contentBinding:   'CrudSample.userArrayController.arrangedObjects',
         selectionBinding: 'CrudSample.userArrayController.selection',
         exampleView: CrudSample.TableRowView,
-        recordType: CrudSample.UserModel,
+        recordType: CrudSample.UserRecord,
         target: "CrudSample.mainPage.detailPane",
         action: "showForUpdate"
       })
@@ -118,7 +120,8 @@ CrudSample.mainPage = SC.Page.design({
           layout: { left: 0, width: 95, height: 18, centerY: 0 },
 
           value: 'Username',
-          textAlign: SC.ALIGN_RIGHT
+          textAlign: SC.ALIGN_RIGHT,
+          fontWeight: SC.BOLD_WEIGHT
         }),
 
         field: SC.TextFieldView.design({
@@ -135,7 +138,8 @@ CrudSample.mainPage = SC.Page.design({
           layout: { left: 0, width: 95, height: 18, centerY: 0 },
 
           value: 'Department',
-          textAlign: SC.ALIGN_RIGHT
+          textAlign: SC.ALIGN_RIGHT,
+          fontWeight: SC.BOLD_WEIGHT
         }),
 
         field: SC.TextFieldView.design({
@@ -152,7 +156,8 @@ CrudSample.mainPage = SC.Page.design({
           layout: { left: 0, width: 95, height: 18, centerY: 0 },
 
           value: 'User Status',
-          textAlign: SC.ALIGN_RIGHT
+          textAlign: SC.ALIGN_RIGHT,
+          fontWeight: SC.BOLD_WEIGHT
         }),
 
         field: SC.SelectFieldView.design({
@@ -183,7 +188,8 @@ CrudSample.mainPage = SC.Page.design({
           layout: { left: 0, width: 95, height: 18, centerY: 0 },
 
           value: 'Is Admin',
-          textAlign: SC.ALIGN_RIGHT
+          textAlign: SC.ALIGN_RIGHT,
+          fontWeight: SC.BOLD_WEIGHT
         }),
 
         field: SC.SelectFieldView.design({
@@ -212,12 +218,20 @@ CrudSample.mainPage = SC.Page.design({
           layout: { left: 0, width: 95, height: 18, centerY: 0 },
 
           value: 'Last Logged In Date',
-          textAlign: SC.ALIGN_RIGHT
+          textAlign: SC.ALIGN_RIGHT,
+          fontWeight: SC.BOLD_WEIGHT
         }),
 
-        field: SC.TextFieldView.design({
-          layout: { width: 250, height: 22, right: 3, centerY: 0 },
-          valueBinding: 'CrudSample.userNestedController.lastLoggedInDate'
+        field: SC.LabelView.design({
+          layout: { width: 250, height: 22, right: 3, centerY: 0, top: 4 },
+          valueBinding: 'CrudSample.userNestedController.lastLoggedInDate',
+          formatter: function(v) {
+            if (SC.kindOf(v, SC.DateTime)) {
+              return v == null ? '' : v.toFormattedString('%Y-%m-%d %H:%M:%S %Z');
+            } else {
+              return '';
+            }
+          }
         })
       }),
 
@@ -240,9 +254,14 @@ CrudSample.mainPage = SC.Page.design({
     // http://markmail.org/message/miobpqe7y34w7rht#query:sproutcore%20panelpane+page:1+mid:miobpqe7y34w7rht+state:results
     detailIsVisible: NO,
 
+    showForCreate: function() {
+      this.set('detailIsVisible', YES);
+      CrudSample.userNestedController.createNew();
+    },
+
     showForUpdate: function() {
       this.set('detailIsVisible', YES);
-      CrudSample.userNestedController.loadCurrent();
+      CrudSample.userNestedController.updateCurrent();
     },
 
     save: function() {

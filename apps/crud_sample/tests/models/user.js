@@ -3,12 +3,12 @@
 // Copyright: ©2010 My Company, Inc.
 // ==========================================================================
 
-module("CrudSample.UserModel");
+module("CrudSample.UserRecord");
 
 test('Create User', function() {
   stop(2000);
 
-  var user = CrudSample.store.createRecord(CrudSample.UserModel, {
+  var user = CrudSample.store.createRecord(CrudSample.UserRecord, {
                 username: 'SpongeBob',
                 department: 'Accounts',
                 status: 'Active',
@@ -22,7 +22,6 @@ test('Create User', function() {
   equals(user.get('isAdmin'), NO, 'user is Admin');
   var d1 = user.get('lastLoggedInDate').toISO8601();
   var d2 = '2010-05-05T10:20:30+00:00';
-  debugger;
   equals(d1, d2, 'user last logged in');
 
   // Status should be ready new because record is new and not committed to server
@@ -31,12 +30,14 @@ test('Create User', function() {
   // Commit changes
   CrudSample.store.commitRecords();
 
+  debugger;
+
   // Sproutcore asynchronously updates the status
   setTimeout(checkCreate, 1000);  
 });
 function checkCreate() {
   // Record should not be located by query anymore
-  var query = SC.Query.local(CrudSample.UserModel, {
+  var query = SC.Query.local(CrudSample.UserRecord, {
     conditions: 'username = {name}',
     name: 'SpongeBob'
     });
@@ -55,7 +56,7 @@ function checkCreate() {
 test('Read and Update User', function() {
   stop(2000);
 
-  var user = CrudSample.store.find(CrudSample.UserModel, '1');
+  var user = CrudSample.store.find(CrudSample.UserRecord, '1');
 
   equals(user.get('username'), 'Michael', 'user name is Michael');
   equals(user.get('department'), 'Accounts', 'department is Accounts');
@@ -83,7 +84,7 @@ test('Read and Update User', function() {
   setTimeout(checkUpdate, 1000);
 });
 function checkUpdate() {
-  var user = CrudSample.store.find(CrudSample.UserModel, '1');
+  var user = CrudSample.store.find(CrudSample.UserRecord, '1');
 
   // Status should now be 'clean' since it's been saved
   ok(user.get('status') & SC.Record.READY_CLEAN, 'Status is READY_CLEAN');
@@ -98,7 +99,7 @@ test('Delete User', function() {
 
   // User query to find user called 'Dwight'/
   // Query returns a SC.RecordArray so we cannot use array[0]. Have to use objectAt() method. 
-  var query = SC.Query.local(CrudSample.UserModel, {
+  var query = SC.Query.local(CrudSample.UserRecord, {
     conditions: 'username = {name}',
     name: 'Dwight'
     });
@@ -120,11 +121,11 @@ test('Delete User', function() {
 });
 function checkDelete() {
   // Record should have been destroyed in memory and on server
-  var user = CrudSample.store.find(CrudSample.UserModel, '2');
+  var user = CrudSample.store.find(CrudSample.UserRecord, '2');
   ok(user.get('status') & SC.Record.DESTROYED_CLEAN, 'Status is DESTROYED_CLEAN');
 
   // Record should not be located by query anymore
-  var query = SC.Query.local(CrudSample.UserModel, {
+  var query = SC.Query.local(CrudSample.UserRecord, {
     conditions: 'username = {name}',
     name: 'Dwight'
     });
@@ -139,7 +140,7 @@ test('Query User', function() {
   // User query to find user called 'Dwight'/
   // Query returns a SC.RecordArray so we cannot use array[0]. Have to use objectAt() method.
   // OR and AND have to be capital case!
-  var query = SC.Query.local(CrudSample.UserModel, {
+  var query = SC.Query.local(CrudSample.UserRecord, {
     conditions: '(username = {name}) OR (username = {name2})',
     name: 'Jim',
     name2: 'Pam',
@@ -160,7 +161,7 @@ test('Query No Matching User', function() {
   // User query to find user called 'Dwight'/
   // Query returns a SC.RecordArray so we cannot use array[0]. Have to use objectAt() method.
   // OR and AND have to be capital case!
-  var query = SC.Query.local(CrudSample.UserModel, {
+  var query = SC.Query.local(CrudSample.UserRecord, {
     conditions: '(username = {name})',
     name: 'XXXXXX',
     orderyBy: ['username']

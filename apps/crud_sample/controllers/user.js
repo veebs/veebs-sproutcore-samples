@@ -5,7 +5,7 @@
 /*globals CrudSample */
 
 /** @class
- * 
+ *
  * Controller to proxy the selected user record in userArrayController.
  *
  * @extends SC.ObjectController
@@ -27,9 +27,9 @@ CrudSample.userController = SC.ObjectController.create({
  * If we were to edit the record in userController, there is no ability to discard changes.  Also any changes are
  * immediately displayed on all bound controls.
  *
- * To use this controller, set the content by calling loadNew() or loadCurrent(). Finish, by calling save() or
- * discard(). 
- * 
+ * To use this controller, set the content by calling createNew() or updateCurrent(). Finish, by calling save() or
+ * discard().
+ *
  * @extends SC.Object
  */
 CrudSample.userNestedController = SC.ObjectController.create({
@@ -46,48 +46,54 @@ CrudSample.userNestedController = SC.ObjectController.create({
 
   /**
    * Empty object that we use to set the content so that any views bound to this content will not throw an
-   * exception like "cannot call method 'get' of null"
+   * exception like "cannot call method 'get' of null" when it tries to get a property value
    */
   emptyContent: SC.Object.create(),
 
   /**
-   * Current nested content we are proxying 
+   * Current nested content we are proxying
    */
   content: this.emptyContent,
 
   /**
-   * Sets up the content of this controller with a new user record to edit
+   * Sets up the content of this controller with a new user record to create
    */
-  loadNew: function() {
+  createNew: function() {
     var ns = CrudSample.store.chain();
     this.set('nestedStore', ns);
 
-    var user = CrudSample.UserModel.create();
-    this.set('content', user);
+    var userRecord = ns.createRecord(CrudSample.UserRecord, {
+      status: 'Active',
+      isAdmin: NO        
+    });
+    this.set('content', userRecord);
   },
 
   /**
-   * Sets up the content of this controller with the current record in userController.
+   * Sets up the content of this controller with the current record in userController
+   * for updating.
    */
-  loadCurrent: function() {
+  updateCurrent: function() {
     var ns = CrudSample.store.chain();
     this.set('nestedStore', ns);
 
     var pk = CrudSample.userController.get('userID');
-    var user = ns.find(CrudSample.UserModel, pk);
-    this.set('content', user);
+    var userRecord = ns.find(CrudSample.UserRecord, pk);
+    this.set('content', userRecord);
   },
 
   /**
    * Saves changes back to the parent store
    */
   save: function() {
+    var nsUserRecord = this.get('content');
+
     var ns = this.get('nestedStore');
     ns.commitChanges();
     ns.destroy();
     this.set('nestedStore', null);
 
-    var userRecord = CrudSample.userController.get("content");
+    var userRecord = CrudSample.store.find(nsUserRecord);
     userRecord.commitRecord();
 
     this.set('content', this.emptyContent);
@@ -103,7 +109,6 @@ CrudSample.userNestedController = SC.ObjectController.create({
     this.set('nestedStore', null);
 
     this.set('content', this.emptyContent);
-
   },
 
   /**
@@ -112,13 +117,18 @@ CrudSample.userNestedController = SC.ObjectController.create({
    */
   recordStateDidChange: function() {
     var userRecord = this.get("content");
-    if (userRecord.get("status") === SC.Record.READY_DIRTY ||
-      userRecord.get("status") === SC.Record.READY_NEW) {
-      this.set("recordIsChanged", YES);
-    } else {
+    if (userRecord == null) {
       this.set("recordIsChanged", NO);
+    } else {
+      if (userRecord.get("status") === SC.Record.READY_DIRTY ||
+        userRecord.get("status") === SC.Record.READY_NEW) {
+        this.set("recordIsChanged", YES);
+      } else {
+        this.set("recordIsChanged", NO);
+      }
     }
   }.observes("*content.status")
 
 
-});
+})
+  ;

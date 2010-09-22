@@ -5,7 +5,7 @@
 
 sc_require('models/user');
 
-CrudSample.UserModel.FIXTURES = [
+CrudSample.UserRecord.FIXTURES = [
 
   {
     userID: 1,

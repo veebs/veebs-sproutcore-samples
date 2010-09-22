@@ -10,7 +10,7 @@
  @extends SC.Record
  @version 0.1
  */
-CrudSample.UserModel = SC.Record.extend({
+CrudSample.UserRecord = SC.Record.extend({
 
   //
   // sc-gen model CrudSample.User
@@ -54,9 +54,18 @@ CrudSample.UserModel = SC.Record.extend({
    * rather than '(False)' as returned by SC.guidFor() (into which the bound value is passed).
    * This means, that No cannot be selected because '(False)' != 'False'.
    */
-  isAdminString: function() {
-    return this.get('isAdmin') ? 'YES' : 'NO';
-  }.property('isAdmin').cacheable(),
+  isAdminString: function(key, value) {
+    // writing
+    if (value !== undefined) {
+      this.writeAttribute('isAdmin', value == 'YES' ? YES : NO);  // write into data hash
+    }
+
+    // reading
+    value = this.readAttribute('isAdmin');
+    value = value ? 'YES' : 'NO';
+
+    return value;
+  }.property().cacheable(),
 
   lastLoggedInDate: SC.Record.attr(SC.DateTime, {userIsoDate: YES})
 

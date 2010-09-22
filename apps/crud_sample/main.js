@@ -20,7 +20,7 @@ CrudSample.main = function main() {
   CrudSample.getPath('mainPage.mainPane').append() ;
 
   // Step 2. Set the content property on your primary controller.
-  var query = SC.Query.local(CrudSample.UserModel);
+  var query = SC.Query.local(CrudSample.UserRecord);
   var users = CrudSample.store.find(query);
   CrudSample.userArrayController.set('content', users);
 };
