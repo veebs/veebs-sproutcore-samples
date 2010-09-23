@@ -8,16 +8,22 @@
 LoginLogoutSample.onePage = SC.Page.design({
 
   onePane: SC.MainPane.design({
-    childViews: 'buttonView logoutButtonView'.w(),
+    childViews: 'labelView buttonView logoutButtonView'.w(),
     
+    labelView: SC.LabelView.design({
+      layout: { top: 20, left: 27, width: 400, height: 20 },
+      value: 'You are on page #1.',
+      classNames: ['title1']
+    }),
+
     buttonView: SC.ButtonView.design({
-      layout: { top: 27, left: 27, width: 400 },
-      title: 'You are on page #1. Click to go to page #2.',
+      layout: { top: 70, left: 27, width: 400 },
+      title: 'Click to go to page #2.',
       action: 'go'
     }),
     
     logoutButtonView: SC.ButtonView.design({
-      layout: { top: 60, left: 27, width: 400 },
+      layout: { top: 110, left: 27, width: 400 },
       title: 'Logout',
       action: 'goLogout'
     }),
