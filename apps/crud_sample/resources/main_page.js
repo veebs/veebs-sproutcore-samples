@@ -4,11 +4,7 @@
 // ==========================================================================
 /*globals CrudSample */
 
-CrudSample.TableRowView = SC.TableRowView.extend({
-
-});
-
-// This page describes the main user interface for your application.  
+// This page describes the main user interface for your application.
 CrudSample.mainPage = SC.Page.design({
 
   mainPane: SC.MainPane.design({
@@ -77,7 +73,8 @@ CrudSample.mainPage = SC.Page.design({
         ],
         contentBinding:   'CrudSample.userArrayController.arrangedObjects',
         selectionBinding: 'CrudSample.userArrayController.selection',
-        exampleView: CrudSample.TableRowView,
+        selectOnMouseDown: YES,
+        exampleView: SC.TableRowView,
         recordType: CrudSample.UserRecord,
         target: "CrudSample.mainPage.detailPane",
         action: "showForUpdate"
@@ -201,10 +198,6 @@ CrudSample.mainPage = SC.Page.design({
           ],
           nameKey: 'name',
           valueKey: 'value',
-
-          acceptsFirstResponder: function() {
-            return this.get('isEnabled');
-          }.property('isEnabled'),
 
           valueBinding: 'CrudSample.userNestedController.isAdminString'
         })

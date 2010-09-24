@@ -4,4 +4,4 @@
 # ===========================================================================
 
 # Add initial buildfile information here
-config :all, :required =>  [:sproutcore, 'sproutcore/table'] 
+config :all, :required =>  [:sproutcore, 'sproutcore/table']
