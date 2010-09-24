@@ -77,7 +77,10 @@ CrudSample.userNestedController = SC.ObjectController.create({
     var ns = CrudSample.store.chain();
     this.set('nestedStore', ns);
 
-    var pk = CrudSample.userController.get('userID');
+    // Get the primary key using the 'id' property and NOT 'userID' because sproutcore caches the primary key in an
+    // array within the store. When records are created,the primary key in the array is updated but the primary key
+    // property in the record is NOT!
+    var pk = CrudSample.userController.get('id');
     var userRecord = ns.find(CrudSample.UserRecord, pk);
     this.set('content', userRecord);
   },
@@ -120,8 +123,8 @@ CrudSample.userNestedController = SC.ObjectController.create({
     if (userRecord == null) {
       this.set("recordIsChanged", NO);
     } else {
-      if (userRecord.get("status") === SC.Record.READY_DIRTY ||
-        userRecord.get("status") === SC.Record.READY_NEW) {
+      var status = userRecord.get("status");
+      if (status === SC.Record.READY_DIRTY || status === SC.Record.READY_NEW) {
         this.set("recordIsChanged", YES);
       } else {
         this.set("recordIsChanged", NO);

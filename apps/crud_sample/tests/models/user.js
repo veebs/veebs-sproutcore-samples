@@ -25,29 +25,36 @@ test('Create User', function() {
   equals(d1, d2, 'user last logged in');
 
   // Status should be ready new because record is new and not committed to server
-  ok(user.get('status') & SC.Record.READY_NEW, 'Status is READY_NEW');
+  ok(user.get('status') === SC.Record.READY_NEW, 'Status is READY_NEW');
 
   // Commit changes
   CrudSample.store.commitRecords();
-
-  debugger;
 
   // Sproutcore asynchronously updates the status
   setTimeout(checkCreate, 1000);  
 });
 function checkCreate() {
-  // Record should not be located by query anymore
+  // Should be to find record now
   var query = SC.Query.local(CrudSample.UserRecord, {
     conditions: 'username = {name}',
     name: 'SpongeBob'
     });
+
   var users = CrudSample.store.find(query);
   ok(users.get('length') == 1, 'SpongeBob record should be searchable by query');
 
-  // Status should now be 'clean' since it's been saved
+  // We should have had our primary key update by SC.AutoIdFixturesDataSource
   var user = users.objectAt(0);
-  ok(user.get('status') & SC.Record.READY_CLEAN, 'Status is READY_CLEAN');
+  ok(user.get('id') != undefined && user.get('id') != null, 'SpongeBob record have its primary key set');
+  ok(user.get('id') >= 1000000, 'SpongeBob record have its primary key as a number >= 1,000,000. ' + user.get('id'));
 
+  // Status should now be 'clean' since it's been saved
+  ok(user.get('status') === SC.Record.READY_CLEAN, 'Status is READY_CLEAN');
+
+  // Can get our record by primary key
+  var user2 = CrudSample.store.find(CrudSample.UserRecord, user.get('id'));
+  equals(user2.get('username'), 'SpongeBob', 'user name is SpongeBob');
+  
   start();
 }
 
@@ -56,7 +63,7 @@ function checkCreate() {
 test('Read and Update User', function() {
   stop(2000);
 
-  var user = CrudSample.store.find(CrudSample.UserRecord, '1');
+  var user = CrudSample.store.find(CrudSample.UserRecord, 1);
 
   equals(user.get('username'), 'Michael', 'user name is Michael');
   equals(user.get('department'), 'Accounts', 'department is Accounts');
@@ -67,27 +74,28 @@ test('Read and Update User', function() {
   equals(d1, d2, 'user last logged in');
 
   // Record status should be clean because we've just retrieved it
-  ok(user.get('status') & SC.Record.READY_CLEAN, 'Status is READY_CLEAN');
+  ok(user.get('status') === SC.Record.READY_CLEAN, 'Status is READY_CLEAN ' + user.get('status'));
 
   // Change property and check that status is not dirty because we've changed it
   user.set('department', 'Payroll');
   equals(user.get('department'), 'Payroll', 'department is Payroll');
-  ok(user.get('status') & SC.Record.READY_DIRTY, 'Status is READY_DIRTY');
+  ok(user.get('status') === SC.Record.READY_DIRTY, 'Status is READY_DIRTY ' + user.get('status'));
 
   // Commit changes
-  CrudSample.store.commitRecords();
+  user.commitRecord();
+  //CrudSample.store.commitRecords();
 
   // Status should now be 'clean' since it's been saved
-  ok(user.get('status') & SC.Record.READY_CLEAN, 'Status is READY_CLEAN');
+  ok(user.get('status') === SC.Record.READY_CLEAN, 'Status is READY_CLEAN 1. ' + user.get('status'));
 
   // Sproutcore asynchronously updates the status
   setTimeout(checkUpdate, 1000);
 });
 function checkUpdate() {
-  var user = CrudSample.store.find(CrudSample.UserRecord, '1');
+  var user = CrudSample.store.find(CrudSample.UserRecord, 1);
 
   // Status should now be 'clean' since it's been saved
-  ok(user.get('status') & SC.Record.READY_CLEAN, 'Status is READY_CLEAN');
+  ok(user.get('status') === SC.Record.READY_CLEAN, 'Status is READY_CLEAN 2. ' + user.get('status'));
 
   start();
 }
@@ -111,7 +119,7 @@ test('Delete User', function() {
   user.destroy();
 
   // Record should have been destroyed in memory but not on server
-  ok(user.get('status') & SC.Record.DESTROYED_DIRTY, 'Status is DESTROYED_DIRTY');
+  ok(user.get('status') === SC.Record.DESTROYED_DIRTY, 'Status is DESTROYED_DIRTY ' + user.get('status'));
 
   // Commit changes
   CrudSample.store.commitRecords();
@@ -121,8 +129,8 @@ test('Delete User', function() {
 });
 function checkDelete() {
   // Record should have been destroyed in memory and on server
-  var user = CrudSample.store.find(CrudSample.UserRecord, '2');
-  ok(user.get('status') & SC.Record.DESTROYED_CLEAN, 'Status is DESTROYED_CLEAN');
+  var user = CrudSample.store.find(CrudSample.UserRecord, 2);
+  ok(user.get('status') === SC.Record.DESTROYED_CLEAN, 'Status is DESTROYED_CLEAN ' + user.get('status'));
 
   // Record should not be located by query anymore
   var query = SC.Query.local(CrudSample.UserRecord, {
