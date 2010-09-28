@@ -74,6 +74,7 @@ CrudSample.mainPage = SC.Page.design({
         contentBinding:   'CrudSample.userArrayController.arrangedObjects',
         selectionBinding: 'CrudSample.userArrayController.selection',
         selectOnMouseDown: YES,
+        canDeleteContent: YES,        
         exampleView: SC.TableRowView,
         recordType: CrudSample.UserRecord,
         target: "CrudSample.mainPage.detailPane",
@@ -100,7 +101,7 @@ CrudSample.mainPage = SC.Page.design({
     layout: { width:400, height:250, centerX:0, centerY:-50},
 
     contentView: SC.View.extend({
-      childViews: 'title username department userStatus isAdmin lastLoggedInDate saveButton cancelButton'.w(),
+      childViews: 'title username department userStatus isAdmin lastLoggedInDate deleteButton saveButton cancelButton'.w(),
 
       title: SC.LabelView.design({
         layout: { left: 17, right: 17, top: 17, height: 26 },
@@ -228,6 +229,16 @@ CrudSample.mainPage = SC.Page.design({
         })
       }),
 
+      deleteButton: SC.ButtonView.design({
+        layout: {bottom: 10, left: 20, height:24, width:80},
+        title: 'Delete',
+        action: 'deleteRecord',
+        isVisibleBinding: SC.Binding.from('CrudSample.userNestedController.recordIsChanged').bool().transform(
+          function(value, isForward) {
+            return !value;
+          })
+      }),
+
       saveButton: SC.ButtonView.design({
         layout: {bottom: 10, right: 110, height:24, width:80},
         title: 'Save',
@@ -264,6 +275,12 @@ CrudSample.mainPage = SC.Page.design({
 
     cancel: function() {
       CrudSample.userNestedController.discard();
+      this.set('detailIsVisible', NO);
+    },
+
+    deleteRecord: function() {
+      CrudSample.userNestedController.discard();
+      CrudSample.mainPage.mainPane.middleView.contentView.deleteSelection();
       this.set('detailIsVisible', NO);
     },
 

@@ -16,9 +16,9 @@ test('Create User', function() {
                 lastLoggedInDate: '2010-05-05T10:20:30Z'
               });
 
-  equals(user.get('username'), 'SpongeBob', 'user name is SpongeBob');
-  equals(user.get('department'), 'Accounts', 'department is Accounts');
-  equals(user.get('userStatus'), 'Active', 'user status is Active');
+  equals(user.get('username'), 'SpongeBob', 'user name');
+  equals(user.get('department'), 'Accounts', 'department');
+  equals(user.get('userStatus'), 'Active', 'user status');
   equals(user.get('isAdmin'), NO, 'user is Admin');
   var d1 = user.get('lastLoggedInDate').toISO8601();
   var d2 = '2010-05-05T10:20:30+00:00';
@@ -41,7 +41,7 @@ function checkCreate() {
     });
 
   var users = CrudSample.store.find(query);
-  ok(users.get('length') == 1, 'SpongeBob record should be searchable by query');
+  equals(users.get('length'), 1, 'SpongeBob record should be searchable by query');
 
   // We should have had our primary key update by SC.AutoIdFixturesDataSource
   var user = users.objectAt(0);
@@ -49,11 +49,11 @@ function checkCreate() {
   ok(user.get('id') >= 1000000, 'SpongeBob record have its primary key as a number >= 1,000,000. ' + user.get('id'));
 
   // Status should now be 'clean' since it's been saved
-  ok(user.get('status') === SC.Record.READY_CLEAN, 'Status is READY_CLEAN');
+  equals(user.get('status'), SC.Record.READY_CLEAN, 'Status is READY_CLEAN');
 
   // Can get our record by primary key
   var user2 = CrudSample.store.find(CrudSample.UserRecord, user.get('id'));
-  equals(user2.get('username'), 'SpongeBob', 'user name is SpongeBob');
+  equals(user2.get('username'), 'SpongeBob', 'user name');
   
   start();
 }
@@ -65,28 +65,28 @@ test('Read and Update User', function() {
 
   var user = CrudSample.store.find(CrudSample.UserRecord, 1);
 
-  equals(user.get('username'), 'Michael', 'user name is Michael');
-  equals(user.get('department'), 'Accounts', 'department is Accounts');
-  equals(user.get('userStatus'), 'Active', 'user status is Active');
+  equals(user.get('username'), 'Michael', 'user name');
+  equals(user.get('department'), 'Accounts', 'department');
+  equals(user.get('userStatus'), 'Active', 'user status');
   equals(user.get('isAdmin'), YES, 'user is Admin');
   var d1 = user.get('lastLoggedInDate').toISO8601();
   var d2 = '2010-01-01T10:20:30+00:00';
   equals(d1, d2, 'user last logged in');
 
   // Record status should be clean because we've just retrieved it
-  ok(user.get('status') === SC.Record.READY_CLEAN, 'Status is READY_CLEAN ' + user.get('status'));
+  equals(user.get('status'), SC.Record.READY_CLEAN, 'Status is READY_CLEAN');
 
   // Change property and check that status is not dirty because we've changed it
   user.set('department', 'Payroll');
   equals(user.get('department'), 'Payroll', 'department is Payroll');
-  ok(user.get('status') === SC.Record.READY_DIRTY, 'Status is READY_DIRTY ' + user.get('status'));
+  equals(user.get('status'), SC.Record.READY_DIRTY, 'Status is READY_DIRTY');
 
   // Commit changes
   user.commitRecord();
   //CrudSample.store.commitRecords();
 
   // Status should now be 'clean' since it's been saved
-  ok(user.get('status') === SC.Record.READY_CLEAN, 'Status is READY_CLEAN 1. ' + user.get('status'));
+  equals(user.get('status'), SC.Record.READY_CLEAN, 'Status is READY_CLEAN 1.');
 
   // Sproutcore asynchronously updates the status
   setTimeout(checkUpdate, 1000);
@@ -95,7 +95,7 @@ function checkUpdate() {
   var user = CrudSample.store.find(CrudSample.UserRecord, 1);
 
   // Status should now be 'clean' since it's been saved
-  ok(user.get('status') === SC.Record.READY_CLEAN, 'Status is READY_CLEAN 2. ' + user.get('status'));
+  equals(user.get('status'), SC.Record.READY_CLEAN, 'Status is READY_CLEAN 2.');
 
   start();
 }
@@ -119,7 +119,7 @@ test('Delete User', function() {
   user.destroy();
 
   // Record should have been destroyed in memory but not on server
-  ok(user.get('status') === SC.Record.DESTROYED_DIRTY, 'Status is DESTROYED_DIRTY ' + user.get('status'));
+  equals(user.get('status'), SC.Record.DESTROYED_DIRTY, 'Status is DESTROYED_DIRTY');
 
   // Commit changes
   CrudSample.store.commitRecords();
@@ -130,7 +130,7 @@ test('Delete User', function() {
 function checkDelete() {
   // Record should have been destroyed in memory and on server
   var user = CrudSample.store.find(CrudSample.UserRecord, 2);
-  ok(user.get('status') === SC.Record.DESTROYED_CLEAN, 'Status is DESTROYED_CLEAN ' + user.get('status'));
+  equals(user.get('status'), SC.Record.DESTROYED_CLEAN, 'Status is DESTROYED_CLEAN');
 
   // Record should not be located by query anymore
   var query = SC.Query.local(CrudSample.UserRecord, {
