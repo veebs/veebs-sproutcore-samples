@@ -259,32 +259,50 @@ CrudSample.mainPage = SC.Page.design({
       })
     }),
 
-    // Methods to show/hide the details pane
-    // Thanks Charles:
-    // http://markmail.org/message/miobpqe7y34w7rht#query:sproutcore%20panelpane+page:1+mid:miobpqe7y34w7rht+state:results
+    /**
+     * Methods to show/hide the details pane
+     * Thanks Charles:
+     * http://markmail.org/message/miobpqe7y34w7rht#query:sproutcore%20panelpane+page:1+mid:miobpqe7y34w7rht+state:results 
+     */
     detailIsVisible: NO,
 
-    /* observer - show/hide panel */
+    /**
+     * observer - show/hide panel
+     */
     detailIsVisibleDidChange: function() {
       var panel = CrudSample.mainPage.get('detailPane');
       if (this.get('detailIsVisible')) {
+        // Show
         panel.append();
+        // Set focus on the username field
+        CrudSample.mainPage.detailPane.contentView.username.field.becomeFirstResponder();
       }
       else {
+        // Hide
         panel.remove();
       }
     }.observes('detailIsVisible'),
-    
+
+    /**
+     * Show this form for a new user
+     */
     showForCreate: function() {
       this.set('detailIsVisible', YES);
       CrudSample.userNestedController.createNew();
     },
 
+    /**
+     * Show this form and load details of the current user for editing
+     */
     showForUpdate: function() {
       this.set('detailIsVisible', YES);
       CrudSample.userNestedController.updateCurrent();
     },
 
+    /**
+     * Save changes
+     * Note that the save button is only visible if there has been changes in the current user record
+     */
     save: function() {
       try {
         CrudSample.userNestedController.save();
@@ -299,11 +317,18 @@ CrudSample.mainPage = SC.Page.design({
       }
     },
 
+    /**
+     * Discard changes
+     */
     cancel: function() {
       CrudSample.userNestedController.discard();
       this.set('detailIsVisible', NO);
     },
 
+    /**
+     * Delete current user.
+     * Note that the delete button is only visible if there are no changes to the current user being edited
+     */
     deleteRecord: function() {
       CrudSample.userNestedController.discard();
       CrudSample.mainPage.mainPane.middleView.contentView.deleteSelection();
