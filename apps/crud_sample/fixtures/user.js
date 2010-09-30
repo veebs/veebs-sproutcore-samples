@@ -9,7 +9,7 @@ CrudSample.UserRecord.FIXTURES = [
 
   {
     userID: 1,
-    username: "Michael",
+    username: "michael",
     department: "Accounts",
     status: "Active",
     isAdmin: YES,
@@ -18,7 +18,7 @@ CrudSample.UserRecord.FIXTURES = [
 
   {
     userID: 2,
-    username: "Dwight",
+    username: "dwight",
     department: "",
     status: "Active",
     isAdmin: NO,
@@ -27,7 +27,7 @@ CrudSample.UserRecord.FIXTURES = [
 
   {
     userID: 3,
-    username: "Jim",
+    username: "jim",
     department: "",
     status: "Active",
     isAdmin: NO,
@@ -36,7 +36,7 @@ CrudSample.UserRecord.FIXTURES = [
 
   {
     userID: 4,
-    username: "Pam",
+    username: "pam",
     department: "",
     status: "Active",
     isAdmin: NO,

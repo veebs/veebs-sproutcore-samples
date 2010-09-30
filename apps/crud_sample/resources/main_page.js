@@ -200,6 +200,10 @@ CrudSample.mainPage = SC.Page.design({
           nameKey: 'name',
           valueKey: 'value',
 
+          acceptsFirstResponder: function() {
+            return this.get('isEnabled');
+          }.property('isEnabled'),
+
           valueBinding: 'CrudSample.userNestedController.isAdminString'
         })
       }),
@@ -243,13 +247,15 @@ CrudSample.mainPage = SC.Page.design({
         layout: {bottom: 10, right: 110, height:24, width:80},
         title: 'Save',
         action: 'save',
+        isDefault: YES,
         isEnabledBinding: 'CrudSample.userNestedController.recordIsChanged'
       }),
 
       cancelButton: SC.ButtonView.design({
         layout: {bottom: 10, right: 20, height:24, width:80},
         title: 'Cancel',
-        action: 'cancel'
+        action: 'cancel',
+        isCancel: YES
       })
     }),
 
@@ -258,6 +264,17 @@ CrudSample.mainPage = SC.Page.design({
     // http://markmail.org/message/miobpqe7y34w7rht#query:sproutcore%20panelpane+page:1+mid:miobpqe7y34w7rht+state:results
     detailIsVisible: NO,
 
+    /* observer - show/hide panel */
+    detailIsVisibleDidChange: function() {
+      var panel = CrudSample.mainPage.get('detailPane');
+      if (this.get('detailIsVisible')) {
+        panel.append();
+      }
+      else {
+        panel.remove();
+      }
+    }.observes('detailIsVisible'),
+    
     showForCreate: function() {
       this.set('detailIsVisible', YES);
       CrudSample.userNestedController.createNew();
@@ -269,8 +286,17 @@ CrudSample.mainPage = SC.Page.design({
     },
 
     save: function() {
-      CrudSample.userNestedController.save();
-      this.set('detailIsVisible', NO);
+      try {
+        CrudSample.userNestedController.save();
+        this.set('detailIsVisible', NO);
+      } catch (e) {
+        if (SC.instanceOf(e, SC.Error)) {
+          SC.AlertPane.error(e.message);
+          CrudSample.mainPage.detailPane.contentView.getPath(e.label).field.becomeFirstResponder();
+        } else {
+          SC.AlertPane.error(e);
+        }
+      }
     },
 
     cancel: function() {
@@ -282,18 +308,8 @@ CrudSample.mainPage = SC.Page.design({
       CrudSample.userNestedController.discard();
       CrudSample.mainPage.mainPane.middleView.contentView.deleteSelection();
       this.set('detailIsVisible', NO);
-    },
+    }
 
-    /* observer - show/hide panel */
-    detailIsVisibleDidChange: function() {
-      var panel = CrudSample.mainPage.get('detailPane');
-      if (this.get('detailIsVisible')) {
-        panel.append();
-      }
-      else {
-        panel.remove();
-      }
-    }.observes('detailIsVisible')
   })  //detailPane
 
 }); // mainPage

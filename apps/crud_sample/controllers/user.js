@@ -89,6 +89,8 @@ CrudSample.userNestedController = SC.ObjectController.create({
    * Saves changes back to the parent store
    */
   save: function() {
+    this.validateRecord();
+    
     var nsUserRecord = this.get('content');
 
     var ns = this.get('nestedStore');
@@ -130,8 +132,52 @@ CrudSample.userNestedController = SC.ObjectController.create({
         this.set("recordIsChanged", NO);
       }
     }
-  }.observes("*content.status")
+  }.observes("*content.status"),
+
+  /**
+   * Checks if the current user's username is valid
+   *
+   * SC.Error Exception thrown if error. 
+   */
+  validateUsername: function() {
+    var pattern = /^[a-z]+$/
+    var nsUserRecord = this.get('content');
+    var username = nsUserRecord.get('username');
+    if (!SC.empty(username)) {
+      if (!pattern.test(username)) {
+        throw SC.Error.desc('Username can only contain a-z in lower case and no spaces.', 'username');
+      }
+    }
+    return;
+  },
+
+  /**
+   * Checks if the current user record is valid
+   *
+   * SC.Error Exception thrown if error.
+   */
+  validateRecord: function() {
+    var nsUserRecord = this.get('content');
+
+    var userName = nsUserRecord.get('username');
+    if (SC.empty(userName)) {
+      throw SC.Error.desc('Username is required', 'username');
+    } else {
+      this.validateUsername();
+    }
+
+    var userStatus = nsUserRecord.get('userStatus');
+    if (SC.empty(userStatus)) {
+      throw SC.Error.desc('Status is required', 'userStatus');
+    }
+
+    var isAdmin = nsUserRecord.get('isAdmin');
+    if (userStatus == 'InActive' && isAdmin) {
+      throw SC.Error.desc('Administrators must be active', 'isAdmin');
+    }
+
+    return;
+  }
 
 
-})
-  ;
+});
