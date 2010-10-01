@@ -13,6 +13,12 @@
 CrudSample.userRecordArrayController = SC.ArrayController.create(SC.CollectionViewDelegate, {
 
   /**
+   * Only allow 1 row to be selected at anyone time.
+   * SC.CollectionView looks for this variable in it's content (which is this array) 
+   */
+  allowsMultipleSelection: NO,
+  
+  /**
    * Allows this controller to properly respond to ListView delete
    * See http://wiki.sproutcore.com/Todos+05-Finishing+the+UI
    * @param view View calling the delete
