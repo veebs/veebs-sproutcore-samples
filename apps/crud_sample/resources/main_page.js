@@ -74,7 +74,7 @@ CrudSample.mainPage = SC.Page.design({
         contentBinding:   'CrudSample.userArrayController.arrangedObjects',
         selectionBinding: 'CrudSample.userArrayController.selection',
         selectOnMouseDown: YES,
-        canDeleteContent: YES,        
+        canDeleteContent: YES,
         exampleView: SC.TableRowView,
         recordType: CrudSample.UserRecord,
         target: "CrudSample.mainPage.detailPane",
@@ -248,7 +248,7 @@ CrudSample.mainPage = SC.Page.design({
         title: 'Save',
         action: 'save',
         isDefault: YES,
-        isEnabledBinding: 'CrudSample.userNestedController.recordIsChanged'
+        isEnabledBinding: 'CrudSample.userNestedController.contentIsChanged'
       }),
 
       cancelButton: SC.ButtonView.design({
@@ -262,7 +262,7 @@ CrudSample.mainPage = SC.Page.design({
     /**
      * Methods to show/hide the details pane
      * Thanks Charles:
-     * http://markmail.org/message/miobpqe7y34w7rht#query:sproutcore%20panelpane+page:1+mid:miobpqe7y34w7rht+state:results 
+     * http://markmail.org/message/miobpqe7y34w7rht#query:sproutcore%20panelpane+page:1+mid:miobpqe7y34w7rht+state:results
      */
     detailIsVisible: NO,
 
@@ -305,14 +305,27 @@ CrudSample.mainPage = SC.Page.design({
      */
     save: function() {
       try {
+        CrudSample.userNestedController.addObserver('savingStatus', this, this.savingStatusDidChange);
         CrudSample.userNestedController.save();
-        this.set('detailIsVisible', NO);
       } catch (e) {
-        if (SC.instanceOf(e, SC.Error)) {
-          SC.AlertPane.error(e.message);
-          CrudSample.mainPage.detailPane.contentView.getPath(e.label).field.becomeFirstResponder();
-        } else {
-          SC.AlertPane.error(e);
+        this.showError(e);
+      }
+    },
+
+    /**
+     * Check if saving has finished
+     */
+    savingStatusDidChange: function() {
+      var savingStatus = CrudSample.userNestedController.get('savingStatus');
+      if (savingStatus == 'success') {
+        CrudSample.userNestedController.removeObserver('savingStatus', this, this.savingStatusDidChange);
+        this.set('detailIsVisible', NO);
+      } else {
+        if (savingStatus == 'error') {
+          CrudSample.userNestedController.removeObserver('savingStatus', this, this.savingStatusDidChange);
+          var e = CrudSample.userNestedController.get('savingError');
+          this.showError(e);
+          CrudSample.userNestedController.fixSaveError();
         }
       }
     },
@@ -333,6 +346,25 @@ CrudSample.mainPage = SC.Page.design({
       CrudSample.userNestedController.discard();
       CrudSample.mainPage.mainPane.middleView.contentView.deleteSelection();
       this.set('detailIsVisible', NO);
+    },
+
+    /**
+     * Show an error message
+     * @param e Error object to show
+     */
+    showError: function(e) {
+      if (SC.instanceOf(e, SC.Error)) {
+        SC.AlertPane.error(e.message);
+        if (!SC.empty(e.label)) {
+          var view = CrudSample.mainPage.detailPane.contentView.getPath(e.label);
+          if (view) {
+            view.field.becomeFirstResponder();
+          }
+        }
+      } else {
+        SC.AlertPane.error(e);
+      }
+
     }
 
   })  //detailPane
