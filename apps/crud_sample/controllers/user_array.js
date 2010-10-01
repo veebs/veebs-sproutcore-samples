@@ -10,7 +10,7 @@
 
  @extends SC.Object
  */
-CrudSample.userArrayController = SC.ArrayController.create(SC.CollectionViewDelegate, {
+CrudSample.userRecordArrayController = SC.ArrayController.create(SC.CollectionViewDelegate, {
 
   /**
    * Allows this controller to properly respond to ListView delete

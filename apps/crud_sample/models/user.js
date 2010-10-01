@@ -37,6 +37,8 @@ CrudSample.UserRecord = SC.Record.extend({
   // Always use Iso Date to avoid confusion between local and utc times
   //
 
+  properties: 'userID username department userStatus isAdminString lastLoggedInDate'.w(),
+
   primaryKey: 'userID',
 
   userID: SC.Record.attr(Number),     //not required on create
@@ -67,6 +69,31 @@ CrudSample.UserRecord = SC.Record.extend({
     return value;
   }.property().cacheable(),
 
-  lastLoggedInDate: SC.Record.attr(SC.DateTime, {userIsoDate: YES})
+  lastLoggedInDate: SC.Record.attr(SC.DateTime, {userIsoDate: YES}),
+
+  /**
+   * Return an object containing a backup of the properties
+   * @returns SC.Object object containing properties to backup
+   */
+  backupProperties: function() {
+    var backup = SC.Object.create();
+    for (var i = 0; i < this.properties.length; i++) {
+      var p = this.properties[i];
+      backup.set(p, this.get(p));
+    }
+    return backup;
+  },
+
+  /**
+   * Restores properties from a backup crated by backupProperties().
+   */
+  restoreProperties: function(backup) {
+    for (var i = 0; i < this.properties.length; i++) {
+      var p = this.properties[i];
+      this.set(p, backup.get(p));
+    }
+    return;
+  }
+
 
 });

@@ -4,7 +4,7 @@
 // ==========================================================================
 /*globals CrudSample module test ok equals same stop start */
 
-module("CrudSample.userController");
+module("CrudSample.userRecordController");
 
 // TODO: Replace with real unit test for CrudSample.userController
 test("test description", function() {

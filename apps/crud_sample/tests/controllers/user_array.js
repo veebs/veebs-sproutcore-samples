@@ -4,7 +4,7 @@
 // ==========================================================================
 /*globals CrudSample module test ok equals same stop start */
 
-module("CrudSample.userArrayController");
+module("CrudSample.userRecordArrayController");
 
 // TODO: Replace with real unit test for CrudSample.userArrayController
 test("test description", function() {

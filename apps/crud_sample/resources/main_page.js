@@ -71,8 +71,8 @@ CrudSample.mainPage = SC.Page.design({
             width: 300
           })
         ],
-        contentBinding:   'CrudSample.userArrayController.arrangedObjects',
-        selectionBinding: 'CrudSample.userArrayController.selection',
+        contentBinding:   'CrudSample.userRecordArrayController.arrangedObjects',
+        selectionBinding: 'CrudSample.userRecordArrayController.selection',
         selectOnMouseDown: YES,
         canDeleteContent: YES,
         exampleView: SC.TableRowView,
@@ -124,7 +124,7 @@ CrudSample.mainPage = SC.Page.design({
 
         field: SC.TextFieldView.design({
           layout: { width: 250, height: 22, right: 3, centerY: 0 },
-          valueBinding: 'CrudSample.userNestedController.username'
+          valueBinding: 'CrudSample.userViewController.username'
         })
       }),
 
@@ -142,7 +142,7 @@ CrudSample.mainPage = SC.Page.design({
 
         field: SC.TextFieldView.design({
           layout: { width: 250, height: 22, right: 3, centerY: 0 },
-          valueBinding: 'CrudSample.userNestedController.department'
+          valueBinding: 'CrudSample.userViewController.department'
         })
       }),
 
@@ -173,7 +173,7 @@ CrudSample.mainPage = SC.Page.design({
             return this.get('isEnabled');
           }.property('isEnabled'),
 
-          valueBinding: 'CrudSample.userNestedController.userStatus'
+          valueBinding: 'CrudSample.userViewController.userStatus'
         })
 
       }),
@@ -204,7 +204,7 @@ CrudSample.mainPage = SC.Page.design({
             return this.get('isEnabled');
           }.property('isEnabled'),
 
-          valueBinding: 'CrudSample.userNestedController.isAdminString'
+          valueBinding: 'CrudSample.userViewController.isAdminString'
         })
       }),
 
@@ -222,7 +222,7 @@ CrudSample.mainPage = SC.Page.design({
 
         field: SC.LabelView.design({
           layout: { width: 250, height: 22, right: 3, centerY: 0, top: 4 },
-          valueBinding: 'CrudSample.userNestedController.lastLoggedInDate',
+          valueBinding: 'CrudSample.userViewController.lastLoggedInDate',
           formatter: function(v) {
             if (SC.kindOf(v, SC.DateTime)) {
               return v == null ? '' : v.toFormattedString('%Y-%m-%d %H:%M:%S %Z');
@@ -237,7 +237,7 @@ CrudSample.mainPage = SC.Page.design({
         layout: {bottom: 10, left: 20, height:24, width:80},
         title: 'Delete',
         action: 'deleteRecord',
-        isVisibleBinding: SC.Binding.from('CrudSample.userNestedController.recordIsChanged').bool().transform(
+        isVisibleBinding: SC.Binding.from('CrudSample.userViewController.recordIsChanged').bool().transform(
           function(value, isForward) {
             return !value;
           })
@@ -248,7 +248,7 @@ CrudSample.mainPage = SC.Page.design({
         title: 'Save',
         action: 'save',
         isDefault: YES,
-        isEnabledBinding: 'CrudSample.userNestedController.contentIsChanged'
+        isEnabledBinding: 'CrudSample.userViewController.contentIsChanged'
       }),
 
       cancelButton: SC.ButtonView.design({
@@ -288,7 +288,7 @@ CrudSample.mainPage = SC.Page.design({
      */
     showForCreate: function() {
       this.set('detailIsVisible', YES);
-      CrudSample.userNestedController.createNew();
+      CrudSample.userViewController.createNew();
     },
 
     /**
@@ -296,7 +296,7 @@ CrudSample.mainPage = SC.Page.design({
      */
     showForUpdate: function() {
       this.set('detailIsVisible', YES);
-      CrudSample.userNestedController.updateCurrent();
+      CrudSample.userViewController.updateCurrent();
     },
 
     /**
@@ -305,8 +305,7 @@ CrudSample.mainPage = SC.Page.design({
      */
     save: function() {
       try {
-        CrudSample.userNestedController.addObserver('savingStatus', this, this.savingStatusDidChange);
-        CrudSample.userNestedController.save();
+        CrudSample.userViewController.save(this, this.saveComplete);
       } catch (e) {
         this.showError(e);
       }
@@ -315,18 +314,11 @@ CrudSample.mainPage = SC.Page.design({
     /**
      * Check if saving has finished
      */
-    savingStatusDidChange: function() {
-      var savingStatus = CrudSample.userNestedController.get('savingStatus');
-      if (savingStatus == 'success') {
-        CrudSample.userNestedController.removeObserver('savingStatus', this, this.savingStatusDidChange);
+    saveComplete: function(errorObject) {
+      if (SC.none(errorObject)) {
         this.set('detailIsVisible', NO);
       } else {
-        if (savingStatus == 'error') {
-          CrudSample.userNestedController.removeObserver('savingStatus', this, this.savingStatusDidChange);
-          var e = CrudSample.userNestedController.get('savingError');
-          this.showError(e);
-          CrudSample.userNestedController.fixSaveError();
-        }
+        this.showError(errorObject);
       }
     },
 
@@ -334,7 +326,7 @@ CrudSample.mainPage = SC.Page.design({
      * Discard changes
      */
     cancel: function() {
-      CrudSample.userNestedController.discard();
+      CrudSample.userViewController.discard();
       this.set('detailIsVisible', NO);
     },
 
@@ -343,7 +335,7 @@ CrudSample.mainPage = SC.Page.design({
      * Note that the delete button is only visible if there are no changes to the current user being edited
      */
     deleteRecord: function() {
-      CrudSample.userNestedController.discard();
+      CrudSample.userViewController.discard();
       CrudSample.mainPage.mainPane.middleView.contentView.deleteSelection();
       this.set('detailIsVisible', NO);
     },

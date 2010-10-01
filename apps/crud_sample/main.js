@@ -22,7 +22,7 @@ CrudSample.main = function main() {
   // Step 2. Set the content property on your primary controller.
   var query = SC.Query.local(CrudSample.UserRecord);
   var users = CrudSample.store.find(query);
-  CrudSample.userArrayController.set('content', users);
+  CrudSample.userRecordArrayController.set('content', users);
 };
 
 function main() { CrudSample.main(); }
