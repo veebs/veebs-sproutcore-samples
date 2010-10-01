@@ -152,9 +152,16 @@ CrudSample.userViewController = SC.ObjectController.create({
       var callbackMethod = this.get('savingCallbackMethod');
       var status = userRecord.get("status");
       if (status === SC.Record.READY_CLEAN) {
+        // Saved OK - select object in UI
+        CrudSample.userRecordArrayController.selectObject(userRecord);
+
+        // Callback UI to clean up
         callbackMethod.call(callbackTarget, null);
-        this._init(null, this.emptyContent, null);        
+
+        // Init variables to get read for next view session
+        this._init(null, this.emptyContent, null);
       } else {
+        // Error
         if (userRecord.get('isError')) {
           callbackMethod.call(callbackTarget, userRecord.get('errorObject'));
           this.fixSaveError(userRecord);

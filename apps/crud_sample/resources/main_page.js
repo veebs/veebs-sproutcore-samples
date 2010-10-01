@@ -101,7 +101,7 @@ CrudSample.mainPage = SC.Page.design({
     layout: { width:400, height:250, centerX:0, centerY:-50},
 
     contentView: SC.View.extend({
-      childViews: 'title username department userStatus isAdmin lastLoggedInDate deleteButton saveButton cancelButton'.w(),
+      childViews: 'title username department userStatus isAdmin lastLoggedInDate savingImage savingMessage deleteButton saveButton cancelButton'.w(),
 
       title: SC.LabelView.design({
         layout: { left: 17, right: 17, top: 17, height: 26 },
@@ -124,7 +124,8 @@ CrudSample.mainPage = SC.Page.design({
 
         field: SC.TextFieldView.design({
           layout: { width: 250, height: 22, right: 3, centerY: 0 },
-          valueBinding: 'CrudSample.userViewController.username'
+          valueBinding: 'CrudSample.userViewController.username',
+          isEnabledBinding: 'CrudSample.mainPage.detailPane.isEnabled'
         })
       }),
 
@@ -142,7 +143,8 @@ CrudSample.mainPage = SC.Page.design({
 
         field: SC.TextFieldView.design({
           layout: { width: 250, height: 22, right: 3, centerY: 0 },
-          valueBinding: 'CrudSample.userViewController.department'
+          valueBinding: 'CrudSample.userViewController.department',
+          isEnabledBinding: 'CrudSample.mainPage.detailPane.isEnabled'
         })
       }),
 
@@ -173,7 +175,8 @@ CrudSample.mainPage = SC.Page.design({
             return this.get('isEnabled');
           }.property('isEnabled'),
 
-          valueBinding: 'CrudSample.userViewController.userStatus'
+          valueBinding: 'CrudSample.userViewController.userStatus',
+          isEnabledBinding: 'CrudSample.mainPage.detailPane.isEnabled'
         })
 
       }),
@@ -204,7 +207,8 @@ CrudSample.mainPage = SC.Page.design({
             return this.get('isEnabled');
           }.property('isEnabled'),
 
-          valueBinding: 'CrudSample.userViewController.isAdminString'
+          valueBinding: 'CrudSample.userViewController.isAdminString',
+          isEnabledBinding: 'CrudSample.mainPage.detailPane.isEnabled'
         })
       }),
 
@@ -233,11 +237,31 @@ CrudSample.mainPage = SC.Page.design({
         })
       }),
 
+      savingImage: SC.ImageView.design({
+        layout: { bottom: 15, left: 175, height:16, width: 16 },
+        value: sc_static('images/loading'),
+        useImageCache: NO,
+        isVisibleBinding: SC.Binding.from('CrudSample.mainPage.detailPane.isEnabled').bool().transform(
+          function(value, isForward) {
+            return !value;
+          })
+      }),
+
+      savingMessage: SC.LabelView.design({
+        layout: { bottom: 8, left: 195, height:24, width: 100 },
+        value: 'Saving ...',
+        classNames: ['saving-message'],
+        isVisibleBinding: SC.Binding.from('CrudSample.mainPage.detailPane.isEnabled').bool().transform(
+          function(value, isForward) {
+            return !value;
+          })
+      }),
+
       deleteButton: SC.ButtonView.design({
         layout: {bottom: 10, left: 20, height:24, width:80},
         title: 'Delete',
         action: 'deleteRecord',
-        isVisibleBinding: SC.Binding.from('CrudSample.userViewController.recordIsChanged').bool().transform(
+        isVisibleBinding: SC.Binding.from('CrudSample.userViewController.contentIsChanged').bool().transform(
           function(value, isForward) {
             return !value;
           })
@@ -248,14 +272,16 @@ CrudSample.mainPage = SC.Page.design({
         title: 'Save',
         action: 'save',
         isDefault: YES,
-        isEnabledBinding: 'CrudSample.userViewController.contentIsChanged'
+        isEnabledBinding: 'CrudSample.userViewController.contentIsChanged',
+        isVisibleBinding: 'CrudSample.mainPage.detailPane.isEnabled'
       }),
 
       cancelButton: SC.ButtonView.design({
         layout: {bottom: 10, right: 20, height:24, width:80},
         title: 'Cancel',
         action: 'cancel',
-        isCancel: YES
+        isCancel: YES,
+        isVisibleBinding: 'CrudSample.mainPage.detailPane.isEnabled'
       })
     }),
 
@@ -305,6 +331,7 @@ CrudSample.mainPage = SC.Page.design({
      */
     save: function() {
       try {
+        this.set('isEnabled', NO);
         CrudSample.userViewController.save(this, this.saveComplete);
       } catch (e) {
         this.showError(e);
@@ -315,6 +342,7 @@ CrudSample.mainPage = SC.Page.design({
      * Check if saving has finished
      */
     saveComplete: function(errorObject) {
+      this.set('isEnabled', YES);
       if (SC.none(errorObject)) {
         this.set('detailIsVisible', NO);
       } else {
