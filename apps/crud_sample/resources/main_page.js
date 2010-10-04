@@ -335,6 +335,7 @@ CrudSample.mainPage = SC.Page.design({
         CrudSample.userViewController.save(this, this.saveComplete);
       } catch (e) {
         this.showError(e);
+        this.set('isEnabled', YES);
       }
     },
 
