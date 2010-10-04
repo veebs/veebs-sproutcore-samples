@@ -15,8 +15,8 @@ Installation Instructions
        cd veebs-sproutcore-samples
 
 
-3. Optional. Install sproutcore source code into our project to help with debugging. Sproutcore build tools is smart
-   enough to use this copy rather than the copy in the installed gem from step #1.
+3. Install sproutcore source code into our project to help with debugging and fixing known bugs in the framework.
+   Sproutcore build tools is smart enough to use this copy rather than the copy in the installed gem from step #1.
 
        cd veebs-sproutcore-samples
        mkdir -p frameworks
@@ -64,6 +64,24 @@ This demonstrates
 3. logout clearing authentication token
 
 Check out the walkthrough on [my blog](http://www.veebsbraindump.com/2010/09/sproutcore-login-logout-sample/).
+
+
+crud-sample
+===========
+Allows the user to Create, Read, Update and Delete user records.
+
+This demonstrates
+
+1.  Use of SC.TableView
+2.  Use of a modal details pane
+3.  Use of a modal error pane
+4.  Field level validation - username must be [a-z]
+5.  Page level validation - username is required
+6.  Nested stores so that local changes can be discarded before commit.
+7.  Simulated server response with 1 second latency
+8.  Simulated server error - check for duplicate keys (username)
+9.  SC.DataSource error handling
+10. Display errors to users
 
 
 table-sample
