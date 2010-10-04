@@ -25,8 +25,9 @@ CrudSample.mainPage = SC.Page.design({
       addButton: SC.ButtonView.design({
         layout: { centerY: 0, height: 24, right: 12, width: 100 },
         title:  'Add User',
-        target: "CrudSample.mainPage.detailPane",
-        action: "showForCreate"
+        target: 'CrudSample.mainPage.detailPane',
+        action: 'showForCreate',
+        isEnabledBinding: 'CrudSample.userRecordArrayController.isReady'
       })
     }),
 
@@ -89,9 +90,7 @@ CrudSample.mainPage = SC.Page.design({
 
       summaryLabel: SC.LabelView.design({
         layout: { centerY: 0, height: 18, left: 20, right: 20 },
-        textAlign: SC.ALIGN_CENTER,
-
-        value: "User Count"
+        valueBinding: 'CrudSample.userRecordArrayController.summary'
       })
     })
 

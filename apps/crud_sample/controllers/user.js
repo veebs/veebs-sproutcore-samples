@@ -86,7 +86,7 @@ CrudSample.userViewController = SC.ObjectController.create({
       isAdmin: NO
     });
 
-    this._init(ns, nsUserRecord, null);
+    this._reset(ns, nsUserRecord, null);
   },
 
   /**
@@ -101,18 +101,18 @@ CrudSample.userViewController = SC.ObjectController.create({
     var pk = CrudSample.userRecordController.get('id');
     var nsUserRecord = ns.find(CrudSample.UserRecord, pk);
 
-    this._init(ns, nsUserRecord, nsUserRecord.backupProperties());    
+    this._reset(ns, nsUserRecord, nsUserRecord.backupProperties());
   },
 
   /**
-   * Init our properties before saving
+   * Reset our state so that we are ready to add or edit a record
    *
    * @param {SC.NestedStore} Nested Data store for this editing session
    * @param {CrudSample.UserRecord} user record from the nested store that we are going to edit. This will be set
    *  as the content of this controller.
    * @param {SC.Object} object containing properties of the original record we are editing
    */
-  _init: function(ns, nsUserRecord, originalProperties) {
+  _reset: function(ns, nsUserRecord, originalProperties) {
     this.set('savingUserRecord', null);
     this.set('savingCallbackTarget', null);
     this.set('savingCallbackMethod', null);
@@ -159,7 +159,7 @@ CrudSample.userViewController = SC.ObjectController.create({
         callbackMethod.call(callbackTarget, null);
 
         // Init variables to get read for next view session
-        this._init(null, this.emptyContent, null);
+        this._reset(null, this.emptyContent, null);
       } else {
         // Error
         if (userRecord.get('isError')) {
@@ -197,7 +197,7 @@ CrudSample.userViewController = SC.ObjectController.create({
       userRecord.propertyDidChange('status');
     }
 
-    this._init(ns, nsUserRecord, this.get('originalProperties'));
+    this._reset(ns, nsUserRecord, this.get('originalProperties'));
   },
 
   /**
@@ -223,7 +223,7 @@ CrudSample.userViewController = SC.ObjectController.create({
     }
 
     // Init for next time
-    this._init(null, this.emptyContent, null);
+    this._reset(null, this.emptyContent, null);
   },
 
   /**

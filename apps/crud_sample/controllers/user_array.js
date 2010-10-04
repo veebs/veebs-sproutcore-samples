@@ -14,10 +14,10 @@ CrudSample.userRecordArrayController = SC.ArrayController.create(SC.CollectionVi
 
   /**
    * Only allow 1 row to be selected at anyone time.
-   * SC.CollectionView looks for this variable in it's content (which is this array) 
+   * SC.CollectionView looks for this variable in it's content (which is this array)
    */
   allowsMultipleSelection: NO,
-  
+
   /**
    * Allows this controller to properly respond to ListView delete
    * See http://wiki.sproutcore.com/Todos+05-Finishing+the+UI
@@ -50,7 +50,39 @@ CrudSample.userRecordArrayController = SC.ArrayController.create(SC.CollectionVi
     this.selectObject(newUser);
 
     return;
-  }
+  },
 
+  /**
+   * Denotes if the data source is ready
+   */
+  isReady: function() {
+    var status = this.get('status');
+    return status & SC.Record.READY;
+  }.property('status').cacheable(),
+
+  /**
+   * Provides a summary of the status of the controller.
+   */
+  summary: function() {
+    var ret = '';
+
+    var status = this.get('status');
+    if (status & SC.Record.READY) {
+      var len = this.get('length');
+      if (len && len > 0) {
+        ret = len === 1 ? "1 user" : "%@ users".fmt(len);
+      } else {
+        ret = "No users";
+      }
+    }
+    if (status & SC.Record.BUSY) {
+      ret = "Loading..."
+    }
+    if (status & SC.Record.ERROR) {
+      ret = "Error"
+    }
+
+    return ret;
+  }.property('length', 'status').cacheable()
 
 });

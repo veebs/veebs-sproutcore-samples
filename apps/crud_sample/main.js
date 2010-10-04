@@ -17,12 +17,14 @@ CrudSample.main = function main() {
   // The default code here will make the mainPane for your application visible
   // on screen.  If you app gets any level of complexity, you will probably 
   // create multiple pages and panes.  
-  CrudSample.getPath('mainPage.mainPane').append() ;
+  CrudSample.getPath('mainPage.mainPane').append();
 
   // Step 2. Set the content property on your primary controller.
-  var query = SC.Query.local(CrudSample.UserRecord);
+  var query = SC.Query.local(CrudSample.UserRecord, {orderBy: 'username'});
   var users = CrudSample.store.find(query);
   CrudSample.userRecordArrayController.set('content', users);
 };
 
-function main() { CrudSample.main(); }
+function main() {
+  CrudSample.main();
+}

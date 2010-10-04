@@ -45,7 +45,7 @@ CrudSample.UserRecord.FIXTURES = [
 
   {
     userID: 5,
-    username: "Ryan",
+    username: "ryan",
     department: "" ,
     status: "Active",
     isAdmin: YES,
