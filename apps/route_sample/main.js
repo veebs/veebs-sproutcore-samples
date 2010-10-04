@@ -1,8 +1,10 @@
 // ==========================================================================
-// Project:   RouteSample
-// Copyright: ©2010 My Company, Inc.
+// Project:   RouteSample - Tutorial Application showing how to move from
+//            page to page.
+// Copyright: ©2010 Vibul Imtarnasan (Veebs).
+// License:   Licensed under MIT license (see license.js)
 // ==========================================================================
-/*globals RouteSample */
+
 
 // This is the function that will start your app running.  The default
 // implementation will load any fixtures you have created then instantiate

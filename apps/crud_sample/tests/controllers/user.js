@@ -9,7 +9,7 @@ module("CrudSample.userRecordController");
 // TODO: Replace with real unit test for CrudSample.userController
 test("test description", function() {
   var expected = "test";
-  var result   = "test";
+  var result = "test";
   equals(result, expected, "test should equal test");
 });
 

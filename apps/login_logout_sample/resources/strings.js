@@ -1,8 +1,8 @@
 // ==========================================================================
-// Project:   Sproutweet Strings
-// Copyright: ©2010 Apple, Inc.
+// Project:   LoginLogoutSample - Tutorial Application to login/logout
+// Copyright: ©2010 Vibul Imtarnasan (Veebs).
+// License:   Licensed under MIT license (see license.js)
 // ==========================================================================
-/*globals Twitter */
 
 // Place strings you want to localize here.  In your app, use the key and
 // localize it using "key string".loc().  HINT: For your key names, use the

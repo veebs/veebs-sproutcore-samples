@@ -1,8 +1,10 @@
 // ==========================================================================
-// Project:   RouteSample
-// Copyright: ©2010 My Company, Inc.
+// Project:   RouteSample - Tutorial Application showing how to move from
+//            page to page.
+// Copyright: ©2010 Vibul Imtarnasan (Veebs).
+// License:   Licensed under MIT license (see license.js)
 // ==========================================================================
-/*globals RouteSample */
+
 
 /** @class
   This is our own routing class that will figure out which page to show next.

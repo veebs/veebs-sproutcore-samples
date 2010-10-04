@@ -1,6 +1,7 @@
 // ==========================================================================
-// Project:   CrudSample.UserModel Unit Test
-// Copyright: ©2010 My Company, Inc.
+// Project:   CrudSample - Tutorial Application on CRUD operations
+// Copyright: ©2010 Vibul Imtarnasan (Veebs).
+// License:   Licensed under MIT license (see license.js)
 // ==========================================================================
 
 module("CrudSample.UserRecord");
@@ -9,12 +10,12 @@ test('Create User', function() {
   stop(2000);
 
   var user = CrudSample.store.createRecord(CrudSample.UserRecord, {
-                username: 'SpongeBob',
-                department: 'Accounts',
-                status: 'Active',
-                isAdmin: NO,
-                lastLoggedInDate: '2010-05-05T10:20:30Z'
-              });
+    username: 'SpongeBob',
+    department: 'Accounts',
+    status: 'Active',
+    isAdmin: NO,
+    lastLoggedInDate: '2010-05-05T10:20:30Z'
+  });
 
   equals(user.get('username'), 'SpongeBob', 'user name');
   equals(user.get('department'), 'Accounts', 'department');
@@ -31,14 +32,14 @@ test('Create User', function() {
   CrudSample.store.commitRecords();
 
   // Sproutcore asynchronously updates the status
-  setTimeout(checkCreate, 1000);  
+  setTimeout(checkCreate, 1000);
 });
 function checkCreate() {
   // Should be to find record now
   var query = SC.Query.local(CrudSample.UserRecord, {
     conditions: 'username = {name}',
     name: 'SpongeBob'
-    });
+  });
 
   var users = CrudSample.store.find(query);
   equals(users.get('length'), 1, 'SpongeBob record should be searchable by query');
@@ -54,10 +55,9 @@ function checkCreate() {
   // Can get our record by primary key
   var user2 = CrudSample.store.find(CrudSample.UserRecord, user.get('id'));
   equals(user2.get('username'), 'SpongeBob', 'user name');
-  
+
   start();
 }
-
 
 
 test('Read and Update User', function() {
@@ -101,7 +101,6 @@ function checkUpdate() {
 }
 
 
-
 test('Delete User', function() {
   stop(2000);
 
@@ -110,7 +109,7 @@ test('Delete User', function() {
   var query = SC.Query.local(CrudSample.UserRecord, {
     conditions: 'username = {name}',
     name: 'Dwight'
-    });
+  });
   var users = CrudSample.store.find(query);
   ok(users.get('length') == 1, 'Found user Dwight');
 
@@ -136,12 +135,11 @@ function checkDelete() {
   var query = SC.Query.local(CrudSample.UserRecord, {
     conditions: 'username = {name}',
     name: 'Dwight'
-    });
+  });
   var users = CrudSample.store.find(query);
   ok(users.get('length') == 0, 'Dwight record should NOT be searchable by query');
   start();
 }
-
 
 
 test('Query User', function() {
@@ -153,16 +151,17 @@ test('Query User', function() {
     name: 'Jim',
     name2: 'Pam',
     orderyBy: ['username']
-    });
+  });
   var users = CrudSample.store.find(query);
 
   ok(users.get('length') == 2, '2 matching users');
   equals(users.objectAt(0).get('username'), 'Jim', '1st user is Jim');
   equals(users.objectAt(1).get('username'), 'Pam', '2nd user is Pam');
 
-  users.forEach(function(user) { SC.Logger.log(user.get('username'));}, this);
+  users.forEach(function(user) {
+    SC.Logger.log(user.get('username'));
+  }, this);
 });
-
 
 
 test('Query No Matching User', function() {
@@ -173,7 +172,7 @@ test('Query No Matching User', function() {
     conditions: '(username = {name})',
     name: 'XXXXXX',
     orderyBy: ['username']
-    });
+  });
   var users = CrudSample.store.find(query);
 
   ok(users.get('length') == 0, '0 matching users');

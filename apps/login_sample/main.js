@@ -1,8 +1,9 @@
 // ==========================================================================
-// Project:   LoginSample
-// Copyright: ©2010 My Company, Inc.
+// Project:   LoginSample - Tutorial Application to login
+// Copyright: ©2010 Vibul Imtarnasan (Veebs).
+// License:   Licensed under MIT license (see license.js)
 // ==========================================================================
-/*globals LoginSample */
+
 
 // This is the function that will start your app running.  The default
 // implementation will load any fixtures you have created then instantiate

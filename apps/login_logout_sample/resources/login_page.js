@@ -1,8 +1,8 @@
 // ==========================================================================
-// Project:   Login - mainPage
-// Copyright: ©2010 My Company, Inc.
+// Project:   LoginLogoutSample - Tutorial Application to login/logout
+// Copyright: ©2010 Vibul Imtarnasan (Veebs).
+// License:   Licensed under MIT license (see license.js)
 // ==========================================================================
-/*globals Login */
 
 /** @class
 

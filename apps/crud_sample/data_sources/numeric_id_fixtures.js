@@ -1,15 +1,20 @@
 // ==========================================================================
-// Project:   CrudSample.AutoIdFixturesDataSource
-// Copyright: ©2010 My Company, Inc.
+// Project:   CrudSample - Tutorial Application on CRUD operations
+// Copyright: ©2010 Vibul Imtarnasan (Veebs).
+// License:   Licensed under MIT license (see license.js)
 // ==========================================================================
-/*globals CrudSample */
 
 /** @class
-
-  Allocates a numeric id for each record.  The standard fixtures allocates a string in the format like @id8. We just
- want a number.
-
- @extends SC.FixturesDataSource
+ *
+ * Overrides the standard fixtures datasource with the following features:
+ *
+ * - Allocates a numeric id for each record.  The standard fixtures allocates a string in the format like @id8.
+ *   We just want a number.
+ * - Provide latency in order to simulate a proper call to a remote server.
+ * - Simulate server side error in checking for unique usernames
+ * 
+ *
+ * @extends SC.FixturesDataSource
  */
 CrudSample.NumericIdFixturesDataSource = SC.FixturesDataSource.extend(
   /** @scope CrudSample.AutoIdFixturesDataSource.prototype */ {

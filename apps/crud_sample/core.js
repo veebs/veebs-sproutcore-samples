@@ -1,6 +1,7 @@
 // ==========================================================================
-// Project:   CrudSample
-// Copyright: ©2010 My Company, Inc.
+// Project:   CrudSample - Tutorial Application on CRUD operations
+// Copyright: ©2010 Vibul Imtarnasan (Veebs).
+// License:   Licensed under MIT license (see license.js)
 // ==========================================================================
 /*globals CrudSample */
 

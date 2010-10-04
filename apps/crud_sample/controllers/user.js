@@ -1,8 +1,8 @@
 // ==========================================================================
-// Project:   CrudSample.userController
-// Copyright: ©2010 My Company, Inc.
+// Project:   CrudSample - Tutorial Application on CRUD operations
+// Copyright: ©2010 Vibul Imtarnasan (Veebs).
+// License:   Licensed under MIT license (see license.js)
 // ==========================================================================
-/*globals CrudSample */
 
 /** @class
  *
@@ -72,7 +72,7 @@ CrudSample.userViewController = SC.ObjectController.create({
   savingUserRecord: null,
 
   /**
-   * If editing, we store the original properties just in case saving fails and we have to restore the original values 
+   * If editing, we store the original properties just in case saving fails and we have to restore the original values
    */
   originalProperties: null,
 
@@ -211,7 +211,7 @@ CrudSample.userViewController = SC.ObjectController.create({
     // If updating and there was an error in the save, we have to restore our properties and reset the
     // record to clean (alternatively, we can reload the record from the data store)
     var nsUserRecord = this.get('content');
-    if (!SC.none(nsUserRecord.get('id')))  {
+    if (!SC.none(nsUserRecord.get('id'))) {
       var userRecord = CrudSample.store.find(nsUserRecord);
       var store = userRecord.get('store');
       var status = userRecord.get("status");
