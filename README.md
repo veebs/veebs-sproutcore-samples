@@ -83,6 +83,7 @@ This demonstrates
 9.  SC.DataSource error handling
 10. Display errors to users
 
+Check out the walkthrough on [my blog](http://www.veebsbraindump.com/2010/10/sproutcore-crud-tutorial-using-sc-tableview).
 
 table-sample
 ============
