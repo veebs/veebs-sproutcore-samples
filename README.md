@@ -85,6 +85,7 @@ This demonstrates
 
 Check out the walkthrough on [my blog](http://www.veebsbraindump.com/2010/10/sproutcore-crud-tutorial-using-sc-tableview).
 
+
 table-sample
 ============
 This is the table view tutorial as documented in the [sproutcore wiki](http://wiki.sproutcore.com/Basic-TableView-Tutorial).
