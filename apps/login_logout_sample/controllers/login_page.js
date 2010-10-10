@@ -51,9 +51,9 @@ LoginLogoutSample.loginPageController = SC.ObjectController.create(
 
       // Simulate a HTTP call to check our data.
       // If the credentials not admin/admin, then get a bad url so we get 404 error
-      var url = '/login_logout_sample/en/current/source/resources/login_page.js';
+      var url = '/login_logout_sample/index.html';
       if (username != 'admin' || password != 'admin') {
-        url = '/login_logout_sample/en/current/source/resources/bad_url.js';
+        url = '/login_logout_sample/bad_url.js';
       }
 
       SC.Request.getUrl(url)
