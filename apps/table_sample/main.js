@@ -17,7 +17,6 @@ TableSample.main = function main() {
   // The default code here will make the mainPane for your application visible
   // on screen.  If you app gets any level of complexity, you will probably 
   // create multiple pages and panes.
-  debugger;
   TableSample.getPath('mainPage.mainPane').append();
   TableSample.usersController.set('content',TableSample.store.find(TableSample.User));
 
