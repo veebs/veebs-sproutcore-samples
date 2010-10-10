@@ -37,8 +37,9 @@ This sample demonstrates
 2. moving between 2 pages (one_page and two_page) using routes using SC.routes.set().
 3. how to read and use URL parameters in the route handler (route.js)
 
-Check out the walkthrough on [my blog](http://www.veebsbraindump.com/2010/08/sproutcore-page-navigation-using-routes/).
+Check out the tutorial on [my blog](http://www.veebsbraindump.com/2010/08/sproutcore-page-navigation-using-routes/).
 
+See it in action [here](http://demo.veebsbraindump.com/route_sample/).
 
 login-sample
 ============
@@ -52,7 +53,9 @@ This demonstrates
 
 This does **NOT** handle cookies, session id or logout.  This is will addressed in an the login-logout-sample (todo).
 
-Check out the walkthrough on [my blog](http://www.veebsbraindump.com/2010/08/sproutcore-login-sample/).
+Check out the tutorial on [my blog](http://www.veebsbraindump.com/2010/08/sproutcore-login-sample/).
+
+See it in action [here](http://demo.veebsbraindump.com/login_sample/).
 
 
 login-logout-sample
@@ -63,7 +66,9 @@ This demonstrates
 2. storage of login permanently, for browser session or for 3 seconds
 3. logout clearing authentication token
 
-Check out the walkthrough on [my blog](http://www.veebsbraindump.com/2010/09/sproutcore-login-logout-sample/).
+Check out the tutorial on [my blog](http://www.veebsbraindump.com/2010/09/sproutcore-login-logout-sample/).
+
+See it in action [here](http://demo.veebsbraindump.com/login_logout_sample/).
 
 
 crud-sample
@@ -83,7 +88,9 @@ This demonstrates
 9.  SC.DataSource error handling
 10. Display errors to users
 
-Check out the walkthrough on [my blog](http://www.veebsbraindump.com/2010/10/sproutcore-crud-tutorial-using-sc-tableview).
+Check out the tutorial on [my blog](http://www.veebsbraindump.com/2010/10/sproutcore-crud-tutorial-using-sc-tableview).
+
+See it in action [here](http://demo.veebsbraindump.com/crud_sample/).
 
 
 table-sample
