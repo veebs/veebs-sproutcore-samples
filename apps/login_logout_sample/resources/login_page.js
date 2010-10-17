@@ -91,10 +91,6 @@ LoginLogoutSample.loginPage = SC.Page.design({
           nameKey: 'name',
           valueKey: 'value',
 
-          acceptsFirstResponder: function() {
-            return this.get('isEnabled');
-          }.property('isEnabled'),
-
           isEnabledBinding: SC.Binding.from("LoginLogoutSample.loginPageController.isLoggingIn")
             .bool()
             .transform(function(value, isForward) {
