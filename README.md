@@ -1,6 +1,6 @@
 This project contains sample apps that I've written as I'm learning Sproutcore and testing out concepts.
 
-As of 14/9/2010, the code has been built to work with Sproutcore 1.4.
+As of 17/10/2010, the code has been built to work with Sproutcore 1.4.2.
 
 Installation Instructions
 =========================
