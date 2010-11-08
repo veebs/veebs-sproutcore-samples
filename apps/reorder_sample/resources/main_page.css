@@ -1,0 +1,27 @@
+.team-view {
+  color: #000000;
+}
+.team-view.team-view-hover {
+  background-color: #99ccff;
+}
+.team-view.team-view-selected {
+  background-color: gold;
+}
+.team-view .team-view-topfiller {
+  height: 10px;
+}
+.team-view .team-view-line1 {
+  height: 40px;
+  font-size: 22px;
+  font-weight: bold;
+  color: #000000;
+}
+.team-view .team-view-line2 {
+  height: 30px;
+  font-size: 14px;
+  color: #000000;
+}
+.team-view .team-view-bottomfiller {
+  height: 10px;
+  border-bottom: 1px solid #444444;
+}

@@ -93,6 +93,22 @@ Check out the tutorial on [my blog](http://www.veebsbraindump.com/2010/10/sprout
 See it in action [here](http://demo.veebsbraindump.com/crud_sample/).
 
 
+reorder-sample
+===========
+Displays a list of items and allows the user to re-order them.
+
+This demonstrates
+
+1. Use of a custom view with SC.ListView
+2. Use of hi-lighting an item when hovering with a mouse
+3. Drap-and-drop re ordering
+
+Check out the tutorial on [my blog](http://www.veebsbraindump.com/2010/10/sproutcore-reorder-tutorial-using-a-custom-listview).
+
+See it in action [here](http://demo.veebsbraindump.com/reorder_sample/).
+
+
+
 table-sample
 ============
 This is the table view tutorial as documented in the [sproutcore wiki](http://wiki.sproutcore.com/Basic-TableView-Tutorial).
