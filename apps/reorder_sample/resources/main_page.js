@@ -19,10 +19,10 @@ ReorderSample.mainPage = SC.Page.design({
       anchorLocation: SC.ANCHOR_TOP,
 
       titleLabel: SC.LabelView.design({
-        layout: { centerY: 0, height: 24, left: 8, width: 200 },
+        layout: { centerY: 0, height: 24, left: 8, width: 300 },
         controlSize: SC.LARGE_CONTROL_SIZE,
         fontWeight: SC.BOLD_WEIGHT,
-        value: 'Veebs Power Rankings'
+        value: 'Veeb\'s Power Rankings'
       })
     }),
 

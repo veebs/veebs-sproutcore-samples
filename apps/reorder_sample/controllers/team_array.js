@@ -45,7 +45,7 @@ ReorderSample.teamArrayController = SC.ArrayController.create(SC.CollectionViewD
   },
 
   /**
-   * Specifies that we are allowed to drag teams
+   * Specifies that data type we are allowed to drag
    */
   collectionViewDragDataTypes: function(view) {
     return [ReorderSample.TeamRecord];
@@ -69,13 +69,10 @@ ReorderSample.teamArrayController = SC.ArrayController.create(SC.CollectionViewD
    @returns {Object} the data object or null if the data could not be provided.
    */
   collectionViewDragDataForType: function(view, drag, dataType) {
-    var ret = null;
-
     if (dataType === ReorderSample.TeamRecord) {
       return view.get('selection');
     }
-
-    return ret;
+    return null;
   },
 
   /**
@@ -96,30 +93,21 @@ ReorderSample.teamArrayController = SC.ArrayController.create(SC.CollectionViewD
    @returns the allowed drag operation.  Defaults to proposedDragOperation
    */
   collectionViewPerformDragOperation: function(view, drag, op, proposedInsertionIndex, proposedDropOperation) {
-    var selectionSet = drag.dataForType(ReorderSample.TeamRecord),
-      content = view.get('content'),
-      len = view.get('length'),
-      source = drag.get('source'),
-      ret = SC.DRAG_NONE;
+    // content is just a reference to this object. 
+    var content = view.get('content');
+    var ret = SC.DRAG_NONE;
 
-    // only if data is available from drag
+    // Continue only if data is available from drag
+    var selectionSet = drag.dataForType(ReorderSample.TeamRecord);
     if (!selectionSet) {
       return ret;
     }
 
-    // adjust the index to the location to insert and then add it
-    if (op & SC.DROP_AFTER) {
-      proposedInsertionIndex--;
-    }
-    if (proposedInsertionIndex > len) {
-      proposedInsertionIndex = len;
-    }
-
     // Get our record - there should only be 1 selection
-    var record = null;
-    var records = selectionSet.map(function(object) {
-      record = object;
-    }, this);
+    var record = selectionSet.firstObject();
+
+    // Suspend notifications for bulk changes to properties
+    content.beginPropertyChanges();
 
     // Re ordering
     var oldIndex = record.get('ranking') - 1;  // -1 to convert from ranking # to index
@@ -136,10 +124,10 @@ ReorderSample.teamArrayController = SC.ArrayController.create(SC.CollectionViewD
     }
     record.set('ranking', proposedInsertionIndex + 1);
 
-    // Finally, select the new record
-    view.select(SC.IndexSet.create(proposedInsertionIndex, 1));
-    view.becomeFirstResponder();
+    // Restart notifications
+    content.endPropertyChanges();
 
+    // Return the requested op, usually SC.DRAG_REORDER, to flag that the event has been handled    
     return op;
   },
 

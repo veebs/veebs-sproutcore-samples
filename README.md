@@ -26,6 +26,7 @@ Installation Instructions
        git branch -r
        git checkout origin/1-4-stable
 
+
 route-sample
 ============
 I found the standard Sproutcore route sample too complex for a newbie like me.
@@ -40,6 +41,7 @@ This sample demonstrates
 Check out the tutorial on [my blog](http://www.veebsbraindump.com/2010/08/sproutcore-page-navigation-using-routes/).
 
 See it in action [here](http://demo.veebsbraindump.com/route_sample/).
+
 
 login-sample
 ============
@@ -94,19 +96,18 @@ See it in action [here](http://demo.veebsbraindump.com/crud_sample/).
 
 
 reorder-sample
-===========
+==============
 Displays a list of items and allows the user to re-order them.
 
 This demonstrates
 
-1. Use of a custom view with SC.ListView
-2. Use of hi-lighting an item when hovering with a mouse
-3. Drap-and-drop re ordering
+1. How to implement a custom SC.ListView row.
+2. How to hi-light an item when hovering with a mouse.
+3. How to implement drag-and-drop re ordering.
 
-Check out the tutorial on [my blog](http://www.veebsbraindump.com/2010/10/sproutcore-reorder-tutorial-using-a-custom-listview).
+Check out the tutorial on [my blog](http://www.veebsbraindump.com/2010/11/sproutcore-tutorial-custom-listview-with-reordering).
 
 See it in action [here](http://demo.veebsbraindump.com/reorder_sample/).
-
 
 
 table-sample

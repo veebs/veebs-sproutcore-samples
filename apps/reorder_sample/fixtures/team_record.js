@@ -7,7 +7,6 @@
 sc_require('models/team_record');
 
 ReorderSample.TeamRecord.FIXTURES = [
-
   {
     guid: 1,
     ranking: 1,
@@ -42,5 +41,4 @@ ReorderSample.TeamRecord.FIXTURES = [
     name: 'Dallas Mavericks',
     reason: "Mark Cuban's cheering must be worth some points."
   }
-
 ];
