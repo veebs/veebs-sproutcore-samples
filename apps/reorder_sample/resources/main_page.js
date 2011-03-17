@@ -41,11 +41,7 @@ ReorderSample.mainPage = SC.Page.design({
         exampleView: ReorderSample.TeamView,
         recordType: ReorderSample.TeamRecord,
         canReorderContent: YES,
-        isEditable: YES,
-
-        mouseExited: function(ev) {
-          this.mouseOut(ev);
-        }
+        isEditable: YES
       })
     }),
 

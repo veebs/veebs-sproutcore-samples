@@ -42,14 +42,14 @@ ReorderSample.TeamView = SC.View.extend(SC.ContentDisplay, {
   /**
    * When the mouse is over this view, set the isHovering flag in order to trigger hi-lighting
    */
-  mouseOver: function() {
+  mouseEntered: function() {
     this.set('isHovering', YES);
   },
 
   /**
    * When the mouse leaves this view, set the isHovering flag in order to turn off hi-lighting
    */
-  mouseOut: function() {
+  mouseExited: function() {
     this.set('isHovering', NO);
   },
 
